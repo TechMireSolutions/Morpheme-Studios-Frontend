@@ -1,16 +1,43 @@
 import { Link } from 'react-router-dom'
+import { useRef } from 'react'
+import { useGSAP } from '@gsap/react'
+import { gsap } from '../lib/gsap.js'
 import Reveal from '../components/Reveal.jsx'
 import AnimatedHeading from '../components/AnimatedHeading.jsx'
 import { journal } from '../data/journal.js'
 
 export default function Journal() {
   const [lead, ...rest] = journal
+  const headerRef = useRef(null)
+
+  useGSAP(() => {
+    const tl = gsap.timeline()
+    tl.from('.page-title .ah-word > span', {
+      yPercent: 110,
+      duration: 1.2,
+      ease: 'power4.out',
+      stagger: 0.08,
+    })
+    .from('.page-head .label, .page-head-sub', {
+      y: 20,
+      autoAlpha: 0,
+      duration: 1,
+      stagger: 0.15,
+      ease: 'power3.out'
+    }, '-=0.8')
+    .from('.jlead-wrap', {
+      y: 40,
+      autoAlpha: 0,
+      duration: 1.2,
+      ease: 'power3.out'
+    }, '-=0.6')
+  }, { scope: headerRef })
 
   return (
-    <div className="page">
+    <div className="page" ref={headerRef}>
       <header className="page-head wrap">
-        <Reveal><p className="label">Journal</p></Reveal>
-        <AnimatedHeading as="h1" className="display page-title" text="Notebook" />
+        <Reveal><p className="label">Blogs</p></Reveal>
+        <AnimatedHeading as="h1" className="display page-title" text="Blogs" />
         <Reveal variant="fade" delay={0.15}>
           <p className="lead maxw-720 page-head-sub">
             Essays, studio news and the materials and ideas we keep returning to.
@@ -19,7 +46,7 @@ export default function Journal() {
       </header>
 
       {/* Lead article */}
-      <section className="wrap section-tight">
+      <section className="wrap section-tight jlead-wrap">
         <Reveal variant="clip">
           <Link to="/journal" className="jlead" data-cursor="Read">
             <div className="media zoom ratio-16-9 jlead-media">

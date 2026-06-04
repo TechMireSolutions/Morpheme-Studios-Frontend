@@ -1,4 +1,7 @@
 import { Link } from 'react-router-dom'
+import { useRef } from 'react'
+import { useGSAP } from '@gsap/react'
+import { gsap } from '../lib/gsap.js'
 import Reveal from '../components/Reveal.jsx'
 import AnimatedHeading from '../components/AnimatedHeading.jsx'
 import Parallax from '../components/Parallax.jsx'
@@ -7,8 +10,33 @@ import { team, approach, stats, offices } from '../data/studio.js'
 import img from '../data/images.js'
 
 export default function Studio() {
+  const headerRef = useRef(null)
+
+  useGSAP(() => {
+    const tl = gsap.timeline()
+    tl.from('.page-title .ah-word > span', {
+      yPercent: 110,
+      duration: 1.2,
+      ease: 'power4.out',
+      stagger: 0.08,
+    })
+    .from('.page-head .label, .page-head-sub', {
+      y: 20,
+      autoAlpha: 0,
+      duration: 1,
+      stagger: 0.15,
+      ease: 'power3.out'
+    }, '-=0.8')
+    .from('.lead-image-wrap', {
+      scale: 1.1,
+      autoAlpha: 0,
+      duration: 1.5,
+      ease: 'power2.out'
+    }, '-=1')
+  }, { scope: headerRef })
+
   return (
-    <div className="page">
+    <div className="page" ref={headerRef}>
       {/* Page header */}
       <header className="page-head wrap">
         <Reveal><p className="label">The Studio</p></Reveal>
@@ -27,7 +55,7 @@ export default function Studio() {
       </header>
 
       {/* Big lead image */}
-      <section className="wrap section-tight">
+      <section className="wrap section-tight lead-image-wrap">
         <Reveal variant="clip">
           <Parallax src={img.studio} alt="Inside the studio" ratio="ratio-16-9" />
         </Reveal>

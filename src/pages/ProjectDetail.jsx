@@ -15,12 +15,32 @@ export default function ProjectDetail() {
   useGSAP(
     () => {
       if (!heroRef.current) return
-      gsap.from('.pd-hero-title > span', {
-        yPercent: 110, duration: 1.1, ease: 'power4.out', stagger: 0.08, delay: 0.1,
+      
+      const tl = gsap.timeline()
+      
+      tl.from('.pd-hero-img', {
+        scale: 1.4,
+        duration: 2.2,
+        ease: 'power4.out',
       })
-      gsap.from('.pd-hero-meta > *', { y: 20, autoAlpha: 0, duration: 0.8, stagger: 0.1, delay: 0.4 })
+      .from('.pd-word > span', {
+        yPercent: 110,
+        duration: 1.2,
+        ease: 'power4.out',
+        stagger: 0.08,
+      }, '-=1.6')
+      .from('.pd-hero-meta > *', {
+        y: 20,
+        autoAlpha: 0,
+        duration: 0.9,
+        stagger: 0.1,
+        ease: 'power3.out'
+      }, '-=0.8')
+
       gsap.to('.pd-hero-img img', {
-        yPercent: 14, ease: 'none',
+        yPercent: 18,
+        scale: 1.15,
+        ease: 'none',
         scrollTrigger: { trigger: heroRef.current, start: 'top top', end: 'bottom top', scrub: true },
       })
     },

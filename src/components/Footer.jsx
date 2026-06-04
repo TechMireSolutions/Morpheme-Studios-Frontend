@@ -40,7 +40,7 @@ export default function Footer() {
             <ul className="footer-list">
               <li><Link to="/projects" className="link-u">Projects</Link></li>
               <li><Link to="/studio" className="link-u">Studio</Link></li>
-              <li><Link to="/journal" className="link-u">Journal</Link></li>
+              <li><Link to="/journal" className="link-u">Blogs</Link></li>
               <li><Link to="/careers" className="link-u">Careers</Link></li>
               <li><Link to="/contact" className="link-u">Contact</Link></li>
             </ul>
@@ -61,9 +61,9 @@ export default function Footer() {
           <div className="footer-col">
             <p className="label">Follow</p>
             <ul className="footer-list">
-              <li><a href="#" className="link-u">Instagram</a></li>
-              <li><a href="#" className="link-u">LinkedIn</a></li>
-              <li><a href="#" className="link-u">Facebook</a></li>
+              <li><a href="https://instagram.com/morphemestudios" target="_blank" rel="noopener noreferrer" className="link-u">Instagram</a></li>
+              <li><a href="https://linkedin.com/company/morphemestudios" target="_blank" rel="noopener noreferrer" className="link-u">LinkedIn</a></li>
+              <li><a href="https://facebook.com/morphemestudios" target="_blank" rel="noopener noreferrer" className="link-u">Facebook</a></li>
             </ul>
           </div>
         </div>
@@ -73,8 +73,8 @@ export default function Footer() {
         <div className="footer-bottom">
           <span className="body-muted">© {new Date().getFullYear()} Morpheme Studios. All rights reserved.</span>
           <div className="footer-legal">
-            <a href="#" className="body-muted link-u">Terms of Use</a>
-            <a href="#" className="body-muted link-u">Data Protection</a>
+            <Link to="/terms" className="body-muted link-u">Terms of Use</Link>
+            <Link to="/privacy" className="body-muted link-u">Data Protection</Link>
           </div>
         </div>
       </div>

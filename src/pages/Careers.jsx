@@ -1,4 +1,7 @@
 import { Link } from 'react-router-dom'
+import { useRef } from 'react'
+import { useGSAP } from '@gsap/react'
+import { gsap } from '../lib/gsap.js'
 import Reveal from '../components/Reveal.jsx'
 import AnimatedHeading from '../components/AnimatedHeading.jsx'
 import Parallax from '../components/Parallax.jsx'
@@ -20,8 +23,33 @@ const values = [
 ]
 
 export default function Careers() {
+  const headerRef = useRef(null)
+
+  useGSAP(() => {
+    const tl = gsap.timeline()
+    tl.from('.page-title .ah-word > span', {
+      yPercent: 110,
+      duration: 1.2,
+      ease: 'power4.out',
+      stagger: 0.08,
+    })
+    .from('.page-head .label, .page-head-sub', {
+      y: 20,
+      autoAlpha: 0,
+      duration: 1,
+      stagger: 0.15,
+      ease: 'power3.out'
+    }, '-=0.8')
+    .from('.careers-image-wrap', {
+      scale: 1.1,
+      autoAlpha: 0,
+      duration: 1.5,
+      ease: 'power2.out'
+    }, '-=1.2')
+  }, { scope: headerRef })
+
   return (
-    <div className="page">
+    <div className="page" ref={headerRef}>
       <header className="page-head wrap">
         <Reveal><p className="label">Careers</p></Reveal>
         <AnimatedHeading as="h1" className="display page-title" text="Build with us." />
@@ -34,7 +62,7 @@ export default function Careers() {
         </Reveal>
       </header>
 
-      <section className="wrap section-tight">
+      <section className="wrap section-tight careers-image-wrap">
         <Reveal variant="clip">
           <Parallax src={img.studio2} alt="Studio culture" ratio="ratio-16-9" />
         </Reveal>

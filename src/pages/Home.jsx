@@ -22,19 +22,26 @@ export default function Home() {
   // Hero intro + background parallax
   useGSAP(
     () => {
+      // Intro sequence
       const tl = gsap.timeline({ delay: 2.3 }) // after loader
-      tl.from('.hero-line > span', {
+      tl.from('.hero-bg', {
+        scale: 1.4,
+        duration: 2.5,
+        ease: 'power4.out',
+      })
+      .from('.hero-line > span', {
         yPercent: 110,
         duration: 1.4,
         ease: 'power4.out',
         stagger: 0.1,
-      })
-        .from('.hero-meta > *', { y: 30, autoAlpha: 0, duration: 1, stagger: 0.15, ease: 'power3.out' }, '-=0.8')
-        .from('.hero-cue', { autoAlpha: 0, duration: 1 }, '-=0.5')
+      }, '-=1.8')
+      .from('.hero-meta > *', { y: 30, autoAlpha: 0, duration: 1, stagger: 0.15, ease: 'power3.out' }, '-=0.8')
+      .from('.hero-cue', { autoAlpha: 0, duration: 1 }, '-=0.5')
 
+      // Scroll animations
       gsap.to('.hero-bg img', {
         yPercent: 25,
-        scale: 1.1,
+        scale: 1.2,
         ease: 'none',
         scrollTrigger: { trigger: heroRef.current, start: 'top top', end: 'bottom top', scrub: true },
       })
@@ -42,8 +49,18 @@ export default function Home() {
         yPercent: -20,
         autoAlpha: 0,
         ease: 'none',
-        scrollTrigger: { trigger: heroRef.current, start: 'top top', end: 'bottom 20%', scrub: true },
+        scrollTrigger: { trigger: heroRef.current, start: 'top top', end: 'bottom 40%', scrub: true },
       })
+
+      // Mouse parallax
+      const onMove = (e) => {
+        const { clientX: x, clientY: y } = e
+        const xPos = (x / window.innerWidth - 0.5) * 40
+        const yPos = (y / window.innerHeight - 0.5) * 40
+        gsap.to('.hero-content', { x: xPos, y: yPos, duration: 1.5, ease: 'power2.out' })
+      }
+      window.addEventListener('mousemove', onMove)
+      return () => window.removeEventListener('mousemove', onMove)
     },
     { scope: heroRef }
   )
