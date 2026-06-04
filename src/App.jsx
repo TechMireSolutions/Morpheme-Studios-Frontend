@@ -14,6 +14,8 @@ import ProjectDetail from './pages/ProjectDetail.jsx'
 import Journal from './pages/Journal.jsx'
 import Careers from './pages/Careers.jsx'
 import Contact from './pages/Contact.jsx'
+import Terms from './pages/Terms.jsx'
+import Privacy from './pages/Privacy.jsx'
 import NotFound from './pages/NotFound.jsx'
 
 export default function App() {

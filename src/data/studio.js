@@ -119,16 +119,19 @@ export const offices = [
   {
     city: 'Ras Al Khaimah',
     country: 'United Arab Emirates',
-    lines: ['Compass Building', 'Al Shohada Road, RAK'],
+    lines: ['SMBA0168 Compass Building', 'Al Shohada Road', 'AL Hamra Industrial Zone-FZ'],
     phone: '+971 — on request',
   },
   {
     city: 'Karachi',
     country: 'Pakistan',
-    lines: ['Zamzama Lane 4, DHA V', 'Karachi'],
+    lines: ['25C/4, 2nd Floor', 'Zamzama Comm. Lane 4, DHA V', 'Karachi'],
     phone: '+92 — on request',
   },
 ]
+
+export const mission = "Morpheme Studios is an architecture design service firm dedicated to contemporary design principles and their practical applications. We specialize in transformative spaces including cultural, corporate, and residential environments, ensuring projects resonate with their environment while enhancing functionality and aesthetics."
+
 
 export const approach = [
   {
