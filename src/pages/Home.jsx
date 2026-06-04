@@ -1,0 +1,271 @@
+import { useRef } from 'react'
+import { Link } from 'react-router-dom'
+import { useGSAP } from '@gsap/react'
+import { gsap } from '../lib/gsap.js'
+
+import Reveal from '../components/Reveal.jsx'
+import AnimatedHeading from '../components/AnimatedHeading.jsx'
+import Marquee from '../components/Marquee.jsx'
+import ProjectCard from '../components/ProjectCard.jsx'
+import Parallax from '../components/Parallax.jsx'
+
+import { getFeatured } from '../data/projects.js'
+import { services, stats } from '../data/studio.js'
+import { journal } from '../data/journal.js'
+import img from '../data/images.js'
+
+export default function Home() {
+  const heroRef = useRef(null)
+  const featured = getFeatured()
+  const journalTop = journal.slice(0, 3)
+
+  // Hero intro + background parallax
+  useGSAP(
+    () => {
+      const tl = gsap.timeline({ delay: 2.3 }) // after loader
+      tl.from('.hero-line > span', {
+        yPercent: 110,
+        duration: 1.2,
+        ease: 'power4.out',
+        stagger: 0.1,
+      })
+        .from('.hero-meta > *', { y: 24, autoAlpha: 0, duration: 0.9, stagger: 0.12, ease: 'power3.out' }, '-=0.7')
+        .from('.hero-cue', { autoAlpha: 0, duration: 0.8 }, '-=0.5')
+
+      gsap.to('.hero-bg img', {
+        yPercent: 18,
+        ease: 'none',
+        scrollTrigger: { trigger: heroRef.current, start: 'top top', end: 'bottom top', scrub: true },
+      })
+      gsap.to('.hero-content', {
+        yPercent: -12,
+        autoAlpha: 0.2,
+        ease: 'none',
+        scrollTrigger: { trigger: heroRef.current, start: 'top top', end: 'bottom top', scrub: true },
+      })
+    },
+    { scope: heroRef }
+  )
+
+  return (
+    <div className="page page-home">
+      {/* ---------------- HERO ---------------- */}
+      <section ref={heroRef} className="hero">
+        <div className="hero-bg">
+          <img src={img.curveArch} alt="Iconic Mosque, Dubai — folded concrete shell" />
+          <div className="hero-scrim" />
+        </div>
+
+        <div className="hero-content wrap">
+          <p className="label hero-eyebrow">Architecture &amp; Design · London · Dubai · Karachi</p>
+          <h1 className="hero-title">
+            <span className="hero-line"><span>Architecture of</span></span>
+            <span className="hero-line"><span className="serif-italic">intuitive</span></span>
+            <span className="hero-line"><span>human wellbeing.</span></span>
+          </h1>
+          <div className="hero-meta">
+            <p className="lead hero-sub">
+              Morpheme Studios is an architecture and design practice creating clear,
+              inspirational and personal spaces across cultural, corporate and
+              residential sectors.
+            </p>
+            <Link to="/projects" className="btn btn-fill hero-btn" data-cursor>
+              View our work <span className="arrow">→</span>
+            </Link>
+          </div>
+        </div>
+
+        <div className="hero-cue">
+          <span>Scroll</span>
+          <span className="hero-cue-line" />
+        </div>
+      </section>
+
+      {/* ---------------- MARQUEE ---------------- */}
+      <section className="marquee-band">
+        <Marquee
+          items={['Architecture', 'Interiors', 'Master Planning', 'Arts & Design', 'Hospitality', 'Residential']}
+        />
+      </section>
+
+      {/* ---------------- INTRO / ABOUT ---------------- */}
+      <section className="section intro">
+        <div className="wrap intro-grid">
+          <Reveal className="intro-left">
+            <p className="label">(About the studio)</p>
+          </Reveal>
+          <div className="intro-right">
+            <AnimatedHeading
+              as="h2"
+              className="h-xl intro-statement"
+              text="We create clear, inspirational and personal architecture of high quality — work that puts people, light and place first."
+            />
+            <Reveal variant="fade" delay={0.2} className="intro-foot">
+              <p className="lead body-muted">
+                M/S Morpheme Studios is an architecture design firm and an
+                incorporation of art. We operate across scales and sectors,
+                specialising in the creation of transformative spaces.
+              </p>
+              <Link to="/studio" className="link-u intro-link" data-cursor>Dive into the studio →</Link>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------------- FEATURED PROJECTS ---------------- */}
+      <section className="section featured">
+        <div className="wrap">
+          <Reveal variant="stagger" className="section-head">
+            <p className="label">Selected Work</p>
+            <h2 className="h-lg">Featured projects</h2>
+            <Link to="/projects" className="link-u section-head-link" data-cursor>All projects →</Link>
+          </Reveal>
+        </div>
+
+        <div className="wrap featured-grid">
+          {featured.map((p, i) => (
+            <Reveal
+              key={p.slug}
+              variant="fade"
+              className={`featured-item ${i % 3 === 0 ? 'is-wide' : ''}`}
+            >
+              <ProjectCard project={p} index={i} ratio={i % 3 === 0 ? 'ratio-16-9' : 'ratio-4-3'} />
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* ---------------- SERVICES ---------------- */}
+      <ServicesList />
+
+      {/* ---------------- STATS (dark) ---------------- */}
+      <section className="section dark stats">
+        <div className="wrap">
+          <Reveal variant="stagger" className="stats-grid">
+            {stats.map((s) => (
+              <div key={s.label} className="stat">
+                <Counter value={s.value} suffix={s.suffix} />
+                <p className="label">{s.label}</p>
+              </div>
+            ))}
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ---------------- JOURNAL TEASER ---------------- */}
+      <section className="section journal-teaser">
+        <div className="wrap">
+          <Reveal className="section-head">
+            <p className="label">Journal</p>
+            <h2 className="h-lg">Thinking &amp; news</h2>
+            <Link to="/journal" className="link-u section-head-link" data-cursor>Read the journal →</Link>
+          </Reveal>
+
+          <div className="grid cols-3 keep-2 journal-grid">
+            {journalTop.map((post) => (
+              <Reveal variant="fade" key={post.slug}>
+                <Link to="/journal" className="jcard" data-cursor="Read">
+                  <div className="media zoom ratio-4-3">
+                    <img src={post.image} alt={post.title} loading="lazy" />
+                  </div>
+                  <div className="jcard-meta">
+                    <div className="jcard-top">
+                      <span className="label">{post.category}</span>
+                      <span className="body-muted jcard-date">{post.date}</span>
+                    </div>
+                    <h3 className="h-md">{post.title}</h3>
+                    <p className="body-muted">{post.excerpt}</p>
+                  </div>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
+  )
+}
+
+/* ---- Services list with hover-follow image ---- */
+function ServicesList() {
+  const ref = useRef(null)
+  const previewRef = useRef(null)
+
+  useGSAP(
+    () => {
+      const setX = gsap.quickTo(previewRef.current, 'x', { duration: 0.5, ease: 'power3' })
+      const setY = gsap.quickTo(previewRef.current, 'y', { duration: 0.5, ease: 'power3' })
+      const onMove = (e) => {
+        const r = ref.current.getBoundingClientRect()
+        setX(e.clientX - r.left)
+        setY(e.clientY - r.top)
+      }
+      ref.current.addEventListener('mousemove', onMove)
+      return () => ref.current?.removeEventListener('mousemove', onMove)
+    },
+    { scope: ref }
+  )
+
+  const show = (src) => {
+    if (!previewRef.current) return
+    previewRef.current.querySelector('img').src = src
+    gsap.to(previewRef.current, { autoAlpha: 1, scale: 1, duration: 0.4, ease: 'power3.out' })
+  }
+  const hide = () => gsap.to(previewRef.current, { autoAlpha: 0, scale: 0.9, duration: 0.3 })
+
+  return (
+    <section ref={ref} className="section services">
+      <div className="wrap">
+        <Reveal className="section-head">
+          <p className="label">What we do</p>
+          <h2 className="h-lg">Disciplines</h2>
+        </Reveal>
+
+        <ul className="services-list">
+          {services.map((s) => (
+            <li
+              key={s.no}
+              className="service-row"
+              onMouseEnter={() => show(s.image)}
+              onMouseLeave={hide}
+              data-cursor
+            >
+              <span className="service-no label">{s.no}</span>
+              <h3 className="service-title h-lg">{s.title}</h3>
+              <p className="service-blurb body-muted">{s.blurb}</p>
+              <span className="service-arrow">→</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div ref={previewRef} className="services-preview" aria-hidden="true">
+        <img src={services[0].image} alt="" />
+      </div>
+    </section>
+  )
+}
+
+/* ---- Number counter ---- */
+function Counter({ value, suffix }) {
+  const ref = useRef(null)
+  useGSAP(
+    () => {
+      const target = parseInt(value, 10)
+      const obj = { v: 0 }
+      gsap.to(obj, {
+        v: target,
+        duration: 1.8,
+        ease: 'power2.out',
+        scrollTrigger: { trigger: ref.current, start: 'top 85%', once: true },
+        onUpdate: () => { if (ref.current) ref.current.firstChild.textContent = Math.round(obj.v) },
+      })
+    },
+    { scope: ref }
+  )
+  return (
+    <p ref={ref} className="stat-value">
+      <span>0</span>{suffix}
+    </p>
+  )
+}
