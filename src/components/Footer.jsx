@@ -22,7 +22,9 @@ export default function Footer() {
 
         <div className="footer-grid">
           <div className="footer-col footer-brand">
-            <Link to="/" className="footer-logo">Morpheme Studios</Link>
+            <Link to="/" className="footer-logo">
+              <img src="/morpheme2.0-1.png" alt="Morpheme Studios" className="footer-logo-img" />
+            </Link>
             <p className="body-muted footer-tag">
               An architecture &amp; design practice creating clear, inspirational
               and personal spaces across cultural, corporate and residential

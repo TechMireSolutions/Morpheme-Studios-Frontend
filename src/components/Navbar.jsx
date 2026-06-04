@@ -5,7 +5,7 @@ import { gsap } from '../lib/gsap.js'
 const links = [
   { to: '/projects', label: 'Projects' },
   { to: '/studio', label: 'Studio' },
-  { to: '/journal', label: 'Journal' },
+  { to: '/journal', label: 'Blogs' },
   { to: '/careers', label: 'Careers' },
   { to: '/contact', label: 'Contact' },
 ]
@@ -53,8 +53,7 @@ export default function Navbar() {
       <header className={`nav ${hidden ? 'nav--hidden' : ''} ${scrolled ? 'nav--scrolled' : ''}`}>
         <div className="nav-inner wrap">
           <Link to="/" className="nav-logo" data-cursor>
-            <span className="nav-logo-mark">M/S</span>
-            <span className="nav-logo-full">Morpheme Studios</span>
+            <img src="/morpheme2.0-1.png" alt="Morpheme Studios" className="nav-logo-img" />
           </Link>
 
           <nav className="nav-links">

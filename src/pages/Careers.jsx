@@ -75,14 +75,164 @@ export default function Careers() {
               </Reveal>
             ))}
           </ul>
-          <Reveal variant="fade" className="roles-foot">
-            <p className="body-muted">
-              Don’t see your role? We still want to hear from you.
-            </p>
-            <a href="mailto:connect@morphemestudios.com" className="btn" data-cursor>
-              Send an open application <span className="arrow">→</span>
-            </a>
-          </Reveal>
+        </div>
+      </section>
+
+      {/* Application Form */}
+      <section className="section application">
+        <div className="wrap">
+          <div className="contact-grid">
+            <Reveal className="contact-aside">
+              <div className="contact-block">
+                <p className="label">Join the studio</p>
+                <h2 className="h-lg">Submit your application</h2>
+                <p className="body-muted mt-s">
+                  We are always on the lookout for exceptional talent. If you don't see
+                  a role that fits but believe you'd be a great addition to Morpheme
+                  Studios, please fill out the form.
+                </p>
+              </div>
+              <div className="contact-block">
+                <p className="label">Requirements</p>
+                <ul className="footer-list mt-s">
+                  <li>CV (PDF format)</li>
+                  <li>Portfolio (Max 10MB)</li>
+                  <li>Cover Letter</li>
+                </ul>
+              </div>
+            </Reveal>
+
+            <Reveal variant="fade" className="contact-main">
+              <form className="contact-form" onSubmit={(e) => e.preventDefault()}>
+                <div className="field-row">
+                  <div className="field">
+                    <label>First Name*</label>
+                    <input type="text" placeholder="John" required />
+                  </div>
+                  <div className="field">
+                    <label>Last Name*</label>
+                    <input type="text" placeholder="Doe" required />
+                  </div>
+                </div>
+
+                <div className="field-row">
+                  <div className="field">
+                    <label>Gender*</label>
+                    <select required className="custom-select">
+                      <option value="">Select Gender</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                  <div className="field">
+                    <label>Date of Birth*</label>
+                    <input type="date" required />
+                  </div>
+                </div>
+
+                <div className="field-row">
+                  <div className="field">
+                    <label>Nationality*</label>
+                    <input type="text" placeholder="Your Nationality" required />
+                  </div>
+                  <div className="field">
+                    <label>Country of Residence*</label>
+                    <input type="text" placeholder="Current Country" required />
+                  </div>
+                </div>
+
+                <div className="field-row">
+                  <div className="field">
+                    <label>Email*</label>
+                    <input type="email" placeholder="john@example.com" required />
+                  </div>
+                  <div className="field">
+                    <label>Phone*</label>
+                    <input type="tel" placeholder="+1 234 567 890" required />
+                  </div>
+                </div>
+
+                <div className="field">
+                  <label>Home Address*</label>
+                  <textarea placeholder="Your permanent address" rows="2" required></textarea>
+                </div>
+
+                <div className="field-row">
+                  <div className="field">
+                    <label>Field of Expertise</label>
+                    <input type="text" placeholder="e.g. Sustainable Design" />
+                  </div>
+                  <div className="field">
+                    <label>Applying for*</label>
+                    <select required className="custom-select">
+                      <option value="">Select Position</option>
+                      <option value="architect-ii">Architect Part II</option>
+                      <option value="architect-assistant-i">Architectural assistant Part I</option>
+                      <option value="architect-assistant">Architectural assistant</option>
+                      <option value="internship">Internship</option>
+                      <option value="landscape">Landscape Architect</option>
+                      <option value="visualizer">Visualizer</option>
+                      <option value="technician">Architectural Technician</option>
+                      <option value="interior">Interior Designer</option>
+                      <option value="ffe">FF&E Manager</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="field-row">
+                  <div className="field">
+                    <label>Education*</label>
+                    <select required className="custom-select">
+                      <option value="">Select Education Level</option>
+                      <option value="post-grad">Post Graduate</option>
+                      <option value="post-doc">Post Doctor</option>
+                      <option value="diploma">Diploma</option>
+                      <option value="technical">Technical Education</option>
+                      <option value="others">Others</option>
+                    </select>
+                  </div>
+                  <div className="field">
+                    <label>Years of Experience*</label>
+                    <select required className="custom-select">
+                      <option value="">Select Range</option>
+                      <option value="1-3">1 - 3 years</option>
+                      <option value="4-7">4 - 7 years</option>
+                      <option value="7-12">7 - 12 years</option>
+                      <option value="12+">12+ years</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="field-row">
+                  <div className="field">
+                    <label>CV (PDF)*</label>
+                    <input type="file" accept=".pdf" required />
+                  </div>
+                  <div className="field">
+                    <label>Portfolio (Max 10MB)*</label>
+                    <input type="file" accept=".pdf" required />
+                  </div>
+                </div>
+
+                <div className="field">
+                  <label>Cover Letter</label>
+                  <input type="file" accept=".pdf" />
+                </div>
+
+                <div className="field flex items-center gap-s mt-s">
+                  <input type="checkbox" id="terms" required className="checkbox" />
+                  <label htmlFor="terms" className="label-ink" style={{ letterSpacing: '0.05em', textTransform: 'none' }}>
+                    I agree to the Terms of Use and Privacy Policy*
+                  </label>
+                </div>
+
+                <button type="submit" className="btn btn-fill mt-m" data-cursor>
+                  Submit Application <span className="arrow">→</span>
+                </button>
+              </form>
+            </Reveal>
+          </div>
         </div>
       </section>
     </div>

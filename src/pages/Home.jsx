@@ -25,23 +25,24 @@ export default function Home() {
       const tl = gsap.timeline({ delay: 2.3 }) // after loader
       tl.from('.hero-line > span', {
         yPercent: 110,
-        duration: 1.2,
+        duration: 1.4,
         ease: 'power4.out',
         stagger: 0.1,
       })
-        .from('.hero-meta > *', { y: 24, autoAlpha: 0, duration: 0.9, stagger: 0.12, ease: 'power3.out' }, '-=0.7')
-        .from('.hero-cue', { autoAlpha: 0, duration: 0.8 }, '-=0.5')
+        .from('.hero-meta > *', { y: 30, autoAlpha: 0, duration: 1, stagger: 0.15, ease: 'power3.out' }, '-=0.8')
+        .from('.hero-cue', { autoAlpha: 0, duration: 1 }, '-=0.5')
 
       gsap.to('.hero-bg img', {
-        yPercent: 18,
+        yPercent: 25,
+        scale: 1.1,
         ease: 'none',
         scrollTrigger: { trigger: heroRef.current, start: 'top top', end: 'bottom top', scrub: true },
       })
       gsap.to('.hero-content', {
-        yPercent: -12,
-        autoAlpha: 0.2,
+        yPercent: -20,
+        autoAlpha: 0,
         ease: 'none',
-        scrollTrigger: { trigger: heroRef.current, start: 'top top', end: 'bottom top', scrub: true },
+        scrollTrigger: { trigger: heroRef.current, start: 'top top', end: 'bottom 20%', scrub: true },
       })
     },
     { scope: heroRef }
@@ -57,26 +58,31 @@ export default function Home() {
         </div>
 
         <div className="hero-content wrap">
-          <p className="label hero-eyebrow">Architecture &amp; Design · London · Dubai · Karachi</p>
+          <p className="label hero-eyebrow">London · Dubai · Karachi</p>
           <h1 className="hero-title">
-            <span className="hero-line"><span>Architecture of</span></span>
-            <span className="hero-line"><span className="serif-italic">intuitive</span></span>
-            <span className="hero-line"><span>human wellbeing.</span></span>
+            <span className="hero-line"><span>Creating the</span></span>
+            <span className="hero-line"><span>architecture of</span></span>
+            <span className="hero-line"><span className="serif-italic">human wellbeing.</span></span>
           </h1>
           <div className="hero-meta">
-            <p className="lead hero-sub">
+            <p className="lead hero-sub maxw-720">
               Morpheme Studios is an architecture and design practice creating clear,
               inspirational and personal spaces across cultural, corporate and
               residential sectors.
             </p>
-            <Link to="/projects" className="btn btn-fill hero-btn" data-cursor>
-              View our work <span className="arrow">→</span>
-            </Link>
+            <div className="flex gap-s mt-m">
+              <Link to="/projects" className="btn btn-fill hero-btn" data-cursor>
+                Explore Projects <span className="arrow">→</span>
+              </Link>
+              <Link to="/studio" className="btn hero-btn" data-cursor>
+                The Studio
+              </Link>
+            </div>
           </div>
         </div>
 
         <div className="hero-cue">
-          <span>Scroll</span>
+          <span className="label">Scroll</span>
           <span className="hero-cue-line" />
         </div>
       </section>
@@ -92,7 +98,7 @@ export default function Home() {
       <section className="section intro">
         <div className="wrap intro-grid">
           <Reveal className="intro-left">
-            <p className="label">(About the studio)</p>
+            <p className="label">(The Philosophy)</p>
           </Reveal>
           <div className="intro-right">
             <AnimatedHeading
@@ -101,12 +107,13 @@ export default function Home() {
               text="We create clear, inspirational and personal architecture of high quality — work that puts people, light and place first."
             />
             <Reveal variant="fade" delay={0.2} className="intro-foot">
-              <p className="lead body-muted">
+              <p className="lead body-muted maxw-900">
                 M/S Morpheme Studios is an architecture design firm and an
                 incorporation of art. We operate across scales and sectors,
-                specialising in the creation of transformative spaces.
+                specialising in the creation of transformative spaces that
+                resonate with their context and inhabitants.
               </p>
-              <Link to="/studio" className="link-u intro-link" data-cursor>Dive into the studio →</Link>
+              <Link to="/studio" className="link-u intro-link mt-m" data-cursor>Our Story →</Link>
             </Reveal>
           </div>
         </div>
@@ -115,21 +122,23 @@ export default function Home() {
       {/* ---------------- FEATURED PROJECTS ---------------- */}
       <section className="section featured">
         <div className="wrap">
-          <Reveal variant="stagger" className="section-head">
-            <p className="label">Selected Work</p>
-            <h2 className="h-lg">Featured projects</h2>
-            <Link to="/projects" className="link-u section-head-link" data-cursor>All projects →</Link>
+          <Reveal variant="stagger" className="section-head between items-end">
+            <div>
+              <p className="label">Portfolio</p>
+              <h2 className="h-lg">Selected Work</h2>
+            </div>
+            <Link to="/projects" className="link-u section-head-link" data-cursor>View All Projects →</Link>
           </Reveal>
         </div>
 
-        <div className="wrap featured-grid">
+        <div className="wrap featured-grid mt-xl">
           {featured.map((p, i) => (
             <Reveal
               key={p.slug}
               variant="fade"
-              className={`featured-item ${i % 3 === 0 ? 'is-wide' : ''}`}
+              className={`featured-item ${i === 0 ? 'is-wide' : ''}`}
             >
-              <ProjectCard project={p} index={i} ratio={i % 3 === 0 ? 'ratio-16-9' : 'ratio-4-3'} />
+              <ProjectCard project={p} index={i} ratio={i === 0 ? 'ratio-16-9' : 'ratio-3-4'} />
             </Reveal>
           ))}
         </div>
@@ -152,16 +161,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ---------------- JOURNAL TEASER ---------------- */}
+      {/* ---------------- BLOGS TEASER ---------------- */}
       <section className="section journal-teaser">
         <div className="wrap">
-          <Reveal className="section-head">
-            <p className="label">Journal</p>
-            <h2 className="h-lg">Thinking &amp; news</h2>
-            <Link to="/journal" className="link-u section-head-link" data-cursor>Read the journal →</Link>
+          <Reveal className="section-head between items-end">
+            <div>
+              <p className="label">Blogs</p>
+              <h2 className="h-lg">Latest Thinking</h2>
+            </div>
+            <Link to="/journal" className="link-u section-head-link" data-cursor>Read Blogs →</Link>
           </Reveal>
 
-          <div className="grid cols-3 keep-2 journal-grid">
+          <div className="grid cols-3 keep-2 journal-grid mt-xl">
             {journalTop.map((post) => (
               <Reveal variant="fade" key={post.slug}>
                 <Link to="/journal" className="jcard" data-cursor="Read">
