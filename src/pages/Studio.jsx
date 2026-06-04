@@ -87,33 +87,6 @@ export default function Studio() {
         </div>
       </section>
 
-      {/* Approach steps */}
-      <section className="section dark approach">
-        <div className="wrap">
-          <Reveal className="section-head">
-            <p className="label">How we work</p>
-            <h2 className="h-lg">Our approach</h2>
-          </Reveal>
-          <div className="grid cols-4 keep-2 approach-grid">
-            {approach.map((a) => (
-              <Reveal variant="up" key={a.no} className="approach-card">
-                <span className="approach-no">{a.no}</span>
-                <h3 className="h-md">{a.title}</h3>
-                <p className="body-muted">{a.text}</p>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Stats marquee */}
-      <section className="marquee-band marquee-band--alt">
-        <Marquee
-          duration={26}
-          items={['14+ Years', '120+ Projects', '3 Continents', '9 Partners', 'One Studio']}
-        />
-      </section>
-
       {/* Team */}
       <section className="section team">
         <div className="wrap">

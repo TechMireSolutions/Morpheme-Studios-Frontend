@@ -14,15 +14,17 @@ import ProjectDetail from './pages/ProjectDetail.jsx'
 import Journal from './pages/Journal.jsx'
 import Careers from './pages/Careers.jsx'
 import Contact from './pages/Contact.jsx'
+import Terms from './pages/Terms.jsx'
+import Privacy from './pages/Privacy.jsx'
 import NotFound from './pages/NotFound.jsx'
 
 export default function App() {
   const location = useLocation()
   const [intro, setIntro] = useState(true)
 
-  // Intro loader only on first paint
+  // Safety fallback to hide loader even if GSAP fails
   useEffect(() => {
-    const t = setTimeout(() => setIntro(false), 2200)
+    const t = setTimeout(() => setIntro(false), 5000)
     return () => clearTimeout(t)
   }, [])
 
@@ -46,7 +48,7 @@ export default function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
-      <Footer />
+      <Footer hideCTA={['/journal', '/careers', '/contact', '/terms', '/privacy'].includes(location.pathname)} />
     </>
   )
 }

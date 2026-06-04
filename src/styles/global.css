@@ -52,15 +52,35 @@ body {
   font-weight: 400;
   overflow-x: hidden;
   cursor: none;
+  position: relative;
+}
+
+/* Subtle noise texture for editorial feel */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 9999;
 }
 
 @media (max-width: 900px) {
-  body { cursor: auto; }
+  body { cursor: auto; font-size: 15px; }
+}
+
+@media (max-width: 600px) {
+  :root {
+    --gutter: 20px;
+    --section-y: 60px;
+  }
 }
 
 img { display: block; max-width: 100%; height: auto; }
-a { color: inherit; text-decoration: none; }
-button { font-family: inherit; cursor: none; border: none; background: none; }
+a { color: inherit; text-decoration: none; outline: none; }
+button { font-family: inherit; cursor: none; border: none; background: none; outline: none; }
 ul { list-style: none; }
 
 ::selection { background: var(--clay); color: var(--bone); }
@@ -69,7 +89,7 @@ ul { list-style: none; }
 h1, h2, h3, h4 {
   font-family: var(--serif);
   font-weight: 400;
-  line-height: 1;
+  line-height: 1.1;
   letter-spacing: -0.02em;
 }
 
@@ -81,6 +101,12 @@ h1, h2, h3, h4 {
   font-weight: 400;
 }
 
+@media (max-width: 800px) {
+  .display { font-size: clamp(2.8rem, 12vw, 5rem); line-height: 1; }
+  .h-xl { font-size: 2.5rem; line-height: 1.1; }
+  .h-lg { font-size: 2rem; }
+}
+
 .h-xl { font-size: clamp(2.4rem, 6.5vw, 6.5rem); line-height: 0.95; }
 .h-lg { font-size: clamp(1.8rem, 4.2vw, 4rem); line-height: 1.05; }
 .h-md { font-size: clamp(1.4rem, 2.8vw, 2.4rem); line-height: 1.1; }
@@ -88,15 +114,15 @@ h1, h2, h3, h4 {
 .serif-italic { font-style: italic; }
 
 .lead {
-  font-size: clamp(1.2rem, 2vw, 1.8rem);
-  line-height: 1.4;
+  font-size: clamp(1.1rem, 2vw, 1.6rem); /* Slightly more conservative scaling */
+  line-height: 1.5;
   font-weight: 400;
   letter-spacing: -0.01em;
 }
 
 .label {
   font-family: var(--sans);
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   font-weight: 600;
@@ -125,7 +151,11 @@ h1, h2, h3, h4 {
 .cols-4 { grid-template-columns: repeat(4, 1fr); }
 
 @media (max-width: 1000px) {
-  .cols-2, .cols-3, .cols-4 { grid-template-columns: 1fr; }
+  .cols-2, .cols-3, .cols-4 { grid-template-columns: 1fr; gap: 40px; }
+}
+
+@media (max-width: 600px) {
+  .grid { gap: 32px; }
 }
 
 /* ---------- Buttons / links ---------- */
