@@ -2,23 +2,25 @@ import { Link } from 'react-router-dom'
 import { offices } from '../data/studio.js'
 import AnimatedHeading from './AnimatedHeading.jsx'
 
-export default function Footer() {
+export default function Footer({ hideCTA = false }) {
   return (
     <footer className="footer dark">
       <div className="wrap">
-        <div className="footer-cta">
-          <p className="label">Start a conversation</p>
-          <AnimatedHeading
-            as="h2"
-            className="display footer-cta-title"
-            text="Let’s build something lasting."
-          />
-          <Link to="/contact" className="btn footer-cta-btn" data-cursor>
-            Get in touch <span className="arrow">→</span>
-          </Link>
-        </div>
+        {!hideCTA && (
+          <div className="footer-cta">
+            <p className="label">Start a conversation</p>
+            <AnimatedHeading
+              as="h2"
+              className="display footer-cta-title"
+              text="Let’s build something lasting."
+            />
+            <Link to="/contact" className="btn footer-cta-btn" data-cursor>
+              Get in touch <span className="arrow">→</span>
+            </Link>
+          </div>
+        )}
 
-        <div className="divider" />
+        {!hideCTA && <div className="divider" />}
 
         <div className="footer-grid">
           <div className="footer-col footer-brand">

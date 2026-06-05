@@ -23,7 +23,7 @@ export default function Home() {
   useGSAP(
     () => {
       // Intro sequence
-      const tl = gsap.timeline({ delay: 2.3 }) // after loader
+      const tl = gsap.timeline({ delay: 2.5 }) // after loader completes its lift
       tl.from('.hero-bg', {
         scale: 1.4,
         duration: 2.5,

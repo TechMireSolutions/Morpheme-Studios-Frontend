@@ -8,18 +8,14 @@ import Parallax from '../components/Parallax.jsx'
 import img from '../data/images.js'
 
 const roles = [
-  { title: 'Project Architect', place: 'London', type: 'Full-time' },
-  { title: 'Architectural Designer', place: 'London / Karachi', type: 'Full-time' },
-  { title: 'Interior Designer', place: 'Dubai', type: 'Full-time' },
-  { title: 'BIM Coordinator', place: 'Karachi', type: 'Full-time' },
-  { title: 'Visualisation Artist', place: 'Remote', type: 'Contract' },
-  { title: 'Studio Internship', place: 'London', type: 'Internship' },
-]
-
-const values = [
-  { no: '01', title: 'One studio', text: 'We work as a single team across three countries — ideas travel freely, ego doesn’t.' },
-  { no: '02', title: 'Craft over noise', text: 'We’d rather make one quietly excellent thing than ten loud ones.' },
-  { no: '03', title: 'Grow people', text: 'Mentorship, real responsibility early, and the room to make your own mark.' },
+  { title: 'Senior Architect', place: 'London / Dubai', type: 'Full-time' },
+  { title: 'Architectural Assistants Part I & II', place: 'London / Dubai', type: 'Full-time' },
+  { title: 'Interior Designer', place: 'London / Dubai', type: 'Full-time' },
+  { title: 'FF&E Designer', place: 'Dubai', type: 'Full-time' },
+  { title: 'Landscape Architect', place: 'London / Karachi', type: 'Full-time' },
+  { title: '3D Visualizer', place: 'Remote', type: 'Contract' },
+  { title: 'Business Development Manager', place: 'London / Dubai', type: 'Full-time' },
+  { title: 'Office Manager', place: 'London / Karachi', type: 'Full-time' },
 ]
 
 export default function Careers() {
@@ -55,9 +51,9 @@ export default function Careers() {
         <AnimatedHeading as="h1" className="display page-title" text="Build with us." />
         <Reveal variant="fade" delay={0.15}>
           <p className="lead maxw-720 page-head-sub">
-            We’re always looking for thoughtful designers who care about light, detail
-            and the people who’ll use what we build. Join a studio that works as one
-            across London, Dubai and Karachi.
+            Morpheme Studios is always looking for talented architects, interior architects 
+            and interns to join our team. You will enjoy working in an international, 
+            creative and experimental studio in London and Dubai.
           </p>
         </Reveal>
       </header>
@@ -68,21 +64,17 @@ export default function Careers() {
         </Reveal>
       </section>
 
-      {/* Values */}
+      {/* Intro text */}
       <section className="section">
-        <div className="wrap two-col">
-          <Reveal><p className="label">Why us</p></Reveal>
-          <div className="grid careers-values">
-            {values.map((v) => (
-              <Reveal variant="up" key={v.no} className="value-row">
-                <span className="approach-no">{v.no}</span>
-                <div>
-                  <h3 className="h-md">{v.title}</h3>
-                  <p className="body-muted">{v.text}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+        <div className="wrap maxw-900">
+          <Reveal>
+            <p className="lead body-muted">
+              Our teams are inclusive and embrace different backgrounds and expertise. 
+              We are always looking for creative professionals in the AEC industry. 
+              Please send your CV, motivation letter and portfolio (not more than 10MB) 
+              via the form below.
+            </p>
+          </Reveal>
         </div>
       </section>
 
