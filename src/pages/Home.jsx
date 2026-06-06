@@ -11,13 +11,13 @@ import Parallax from '../components/Parallax.jsx'
 
 import { getFeatured } from '../data/projects.js'
 import { services, stats } from '../data/studio.js'
-import { journal } from '../data/journal.js'
+import { blog } from '../data/blog.js'
 import img from '../data/images.js'
 
 export default function Home() {
   const heroRef = useRef(null)
   const featured = getFeatured()
-  const journalTop = journal.slice(0, 3)
+  const blogTop = blog.slice(0, 3)
 
   // Hero intro + background parallax
   useGSAP(
@@ -70,7 +70,7 @@ export default function Home() {
       {/* ---------------- HERO ---------------- */}
       <section ref={heroRef} className="hero">
         <div className="hero-bg">
-          <img src={img.curveArch} alt="Iconic Mosque, Dubai — folded concrete shell" />
+          <img src="/assets/hero-pynnacles.jpg" alt="Pynnacles Close Residences, London" />
           <div className="hero-scrim" />
         </div>
 
@@ -121,14 +121,11 @@ export default function Home() {
             <AnimatedHeading
               as="h2"
               className="h-xl intro-statement"
-              text="We create clear, inspirational and personal architecture of high quality — work that puts people, light and place first."
+              text="M/S MORPHEME STUDIOS is an architecture design service firm or incorporation of art. The firm reflects an enduring dedication to contemporary design principles and its applications."
             />
             <Reveal variant="fade" delay={0.2} className="intro-foot">
               <p className="lead body-muted maxw-900">
-                M/S Morpheme Studios is an architecture design firm and an
-                incorporation of art. We operate across scales and sectors,
-                specialising in the creation of transformative spaces that
-                resonate with their context and inhabitants.
+                WE operates across various scales and sectors, specializing in the creation of transformative spaces, including cultural, corporate, and residential environments. Our designs emphasize harmony with the surrounding context, ensuring that each project resonates with its environment while enhancing functionality and aesthetics. By integrating innovative design principles, we aims to foster meaningful interactions and experiences within the spaces we create.
               </p>
               <Link to="/studio" className="link-u intro-link mt-m" data-cursor>Our Story →</Link>
             </Reveal>
@@ -178,21 +175,21 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ---------------- BLOGS TEASER ---------------- */}
-      <section className="section journal-teaser">
+      {/* ---------------- BLOG TEASER ---------------- */}
+      <section className="section blog-teaser">
         <div className="wrap">
           <Reveal className="section-head between items-end">
             <div>
-              <p className="label">Blogs</p>
+              <p className="label">Blog</p>
               <h2 className="h-lg">Latest Thinking</h2>
             </div>
-            <Link to="/journal" className="link-u section-head-link" data-cursor>Read Blogs →</Link>
+            <Link to="/blog" className="link-u section-head-link" data-cursor>Read Blog →</Link>
           </Reveal>
 
-          <div className="grid cols-3 keep-2 journal-grid mt-xl">
-            {journalTop.map((post) => (
+          <div className="grid cols-3 keep-2 blog-grid mt-xl">
+            {blogTop.map((post) => (
               <Reveal variant="fade" key={post.slug}>
-                <Link to="/journal" className="jcard" data-cursor="Read">
+                <Link to="/blog" className="jcard" data-cursor="Read">
                   <div className="media zoom ratio-4-3">
                     <img src={post.image} alt={post.title} loading="lazy" />
                   </div>

@@ -243,7 +243,7 @@ export default function Careers() {
                 <div className="field flex items-center gap-s mt-s">
                   <input type="checkbox" id="terms" required className="checkbox" />
                   <label htmlFor="terms" className="label-ink" style={{ letterSpacing: '0.05em', textTransform: 'none' }}>
-                    I agree to the Terms of Use and Privacy Policy*
+                    I agree to the Terms of Use*
                   </label>
                 </div>
 

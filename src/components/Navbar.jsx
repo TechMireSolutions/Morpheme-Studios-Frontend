@@ -5,7 +5,7 @@ import { gsap } from '../lib/gsap.js'
 const links = [
   { to: '/projects', label: 'Projects' },
   { to: '/studio', label: 'Studio' },
-  { to: '/journal', label: 'Blogs' },
+  { to: '/blog', label: 'Blog' },
   { to: '/careers', label: 'Careers' },
   { to: '/contact', label: 'Contact' },
 ]
@@ -48,9 +48,12 @@ export default function Navbar() {
     }
   }, [open])
 
+  const isInternal = location.pathname !== '/'
+  const hasBackground = scrolled || isInternal
+
   return (
     <>
-      <header className={`nav ${hidden ? 'nav--hidden' : ''} ${scrolled ? 'nav--scrolled' : ''}`}>
+      <header className={`nav ${hidden ? 'nav--hidden' : ''} ${hasBackground ? 'nav--scrolled' : ''}`}>
         <div className="nav-inner wrap">
           <Link to="/" className="nav-logo" data-cursor>
             <img src="/morpheme2.0-1.png" alt="Morpheme Studios" className="nav-logo-img" />

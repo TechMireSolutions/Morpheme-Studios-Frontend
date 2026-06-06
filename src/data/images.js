@@ -1,5 +1,5 @@
-// Centralised, curated architecture/interior imagery (Unsplash, stable IDs).
-// Helper appends sizing params so images stay crisp and lightweight.
+// Centralised, curated architecture/interior imagery.
+// Mixed local assets from original site + Unsplash fallbacks.
 const u = (id, w = 1600) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=80`
 
@@ -9,8 +9,8 @@ export const img = {
   towerGlass: u('1496307653780-42ee777d4833'),
   modernBuild: u('1486406146926-c627a92ad1ab'),
   concrete: u('1449157291145-7efd050a4d0e'),
-  cityDusk: u('1480714378408-67cf0d13bc1b'),
-  curveArch: u('1429497419816-9ca5cfb4571a'),
+  cityDusk: '/assets/projects/city-by-sea.jpg',
+  curveArch: '/assets/projects/iconic-mosque.webp',
   museum: u('1518998053901-5348d3961a04'),
   pavilion: u('1511818966892-d7d671e672a2'),
   // Residential
@@ -29,7 +29,7 @@ export const img = {
   interior6: u('1618221195710-dd6b41faaea6'),
   // Retail / commercial
   retail1: u('1441986300917-64674bd600d8'),
-  retail2: u('1555529669-e69e7aa0ba9a'),
+  retail2: '/assets/projects/bunify.jpg',
   cafe: u('1554118811-1e0d58224f24'),
   // Texture / studio
   studio: u('1497366216548-37526070297c'),

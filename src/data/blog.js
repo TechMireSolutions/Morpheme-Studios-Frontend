@@ -1,6 +1,6 @@
 import img from './images.js'
 
-export const journal = [
+export const blog = [
   {
     slug: 'light-as-material',
     title: 'Light as a Material',
@@ -57,4 +57,4 @@ export const journal = [
   },
 ]
 
-export const getPost = (slug) => journal.find((p) => p.slug === slug)
+export const getPost = (slug) => blog.find((p) => p.slug === slug)

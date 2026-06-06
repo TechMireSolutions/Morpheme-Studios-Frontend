@@ -224,7 +224,8 @@ input[type="file"]::-webkit-file-upload-button {
 }
 
 /* =================== STATS =================== */
-.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(32px, 4vw, 64px); }
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(32px, 4vw, 64px); text-align: center; }
+.stat { display: flex; flex-direction: column; align-items: center; justify-content: center; }
 .stat-value {
   font-family: var(--serif);
   font-size: clamp(4rem, 8vw, 8rem);
@@ -233,9 +234,10 @@ input[type="file"]::-webkit-file-upload-button {
 }
 .stat .label { margin-top: 16px; font-weight: 700; }
 @media (max-width: 900px) { .stats-grid { grid-template-columns: 1fr 1fr; gap: 50px 32px; } }
+@media (max-width: 600px) { .stats-grid { grid-template-columns: 1fr; gap: 40px; } }
 
-/* =================== JOURNAL CARDS =================== */
-.journal-grid { margin-top: 12px; }
+/* =================== BLOG CARDS =================== */
+.blog-grid { margin-top: 12px; }
 .jcard-meta { padding-top: 24px; display: flex; flex-direction: column; gap: 12px; }
 .jcard-top { display: flex; justify-content: space-between; align-items: baseline; }
 .jcard-date { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6; }

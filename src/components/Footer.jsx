@@ -6,22 +6,6 @@ export default function Footer({ hideCTA = false }) {
   return (
     <footer className="footer dark">
       <div className="wrap">
-        {!hideCTA && (
-          <div className="footer-cta">
-            <p className="label">Start a conversation</p>
-            <AnimatedHeading
-              as="h2"
-              className="display footer-cta-title"
-              text="Let’s build something lasting."
-            />
-            <Link to="/contact" className="btn footer-cta-btn" data-cursor>
-              Get in touch <span className="arrow">→</span>
-            </Link>
-          </div>
-        )}
-
-        {!hideCTA && <div className="divider" />}
-
         <div className="footer-grid">
           <div className="footer-col footer-brand">
             <Link to="/" className="footer-logo">
@@ -42,7 +26,7 @@ export default function Footer({ hideCTA = false }) {
             <ul className="footer-list">
               <li><Link to="/projects" className="link-u">Projects</Link></li>
               <li><Link to="/studio" className="link-u">Studio</Link></li>
-              <li><Link to="/journal" className="link-u">Blogs</Link></li>
+              <li><Link to="/blog" className="link-u">Blog</Link></li>
               <li><Link to="/careers" className="link-u">Careers</Link></li>
               <li><Link to="/contact" className="link-u">Contact</Link></li>
             </ul>
@@ -76,7 +60,7 @@ export default function Footer({ hideCTA = false }) {
           <span className="body-muted">© {new Date().getFullYear()} Morpheme Studios. All rights reserved.</span>
           <div className="footer-legal">
             <Link to="/terms" className="body-muted link-u">Terms of Use</Link>
-            <Link to="/privacy" className="body-muted link-u">Data Protection</Link>
+            <a href="https://www.legislation.gov.uk/ukpga/2018/12/contents/enacted" target="_blank" rel="noopener noreferrer" className="body-muted link-u">Data Protection Act</a>
           </div>
         </div>
       </div>

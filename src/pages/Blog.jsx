@@ -4,10 +4,10 @@ import { useGSAP } from '@gsap/react'
 import { gsap } from '../lib/gsap.js'
 import Reveal from '../components/Reveal.jsx'
 import AnimatedHeading from '../components/AnimatedHeading.jsx'
-import { journal } from '../data/journal.js'
+import { blog } from '../data/blog.js'
 
-export default function Journal() {
-  const [lead, ...rest] = journal
+export default function Blog() {
+  const [lead, ...rest] = blog
   const headerRef = useRef(null)
 
   useGSAP(() => {
@@ -36,8 +36,8 @@ export default function Journal() {
   return (
     <div className="page" ref={headerRef}>
       <header className="page-head wrap">
-        <Reveal><p className="label">Blogs</p></Reveal>
-        <AnimatedHeading as="h1" className="display page-title" text="Blogs" />
+        <Reveal><p className="label">Blog</p></Reveal>
+        <AnimatedHeading as="h1" className="display page-title" text="Blog" />
         <Reveal variant="fade" delay={0.15}>
           <p className="lead maxw-720 page-head-sub">
             Essays, studio news and the materials and ideas we keep returning to.
@@ -48,7 +48,7 @@ export default function Journal() {
       {/* Lead article */}
       <section className="wrap section-tight jlead-wrap">
         <Reveal variant="clip">
-          <Link to="/journal" className="jlead" data-cursor="Read">
+          <Link to="/blog" className="jlead" data-cursor="Read">
             <div className="media zoom ratio-16-9 jlead-media">
               <img src={lead.image} alt={lead.title} />
             </div>
@@ -67,10 +67,10 @@ export default function Journal() {
 
       {/* Grid */}
       <section className="section">
-        <div className="wrap grid cols-3 keep-2 journal-grid">
+        <div className="wrap grid cols-3 keep-2 blog-grid">
           {rest.map((post) => (
             <Reveal variant="fade" key={post.slug}>
-              <Link to="/journal" className="jcard" data-cursor="Read">
+              <Link to="/blog" className="jcard" data-cursor="Read">
                 <div className="media zoom ratio-4-3">
                   <img src={post.image} alt={post.title} loading="lazy" />
                 </div>

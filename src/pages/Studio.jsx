@@ -5,7 +5,6 @@ import { gsap } from '../lib/gsap.js'
 import Reveal from '../components/Reveal.jsx'
 import AnimatedHeading from '../components/AnimatedHeading.jsx'
 import Parallax from '../components/Parallax.jsx'
-import Marquee from '../components/Marquee.jsx'
 import { team, approach, stats, offices } from '../data/studio.js'
 import img from '../data/images.js'
 
@@ -43,13 +42,11 @@ export default function Studio() {
         <AnimatedHeading
           as="h1"
           className="display page-title"
-          text="People, light, place."
+          text="We create clear, inspirational and personal architecture of high quality which fosters intuitive human wellbeing."
         />
         <Reveal variant="fade" delay={0.2}>
           <p className="lead maxw-720 page-head-sub">
-            We are an architecture and design practice with a simple belief: that good
-            space should be clear, inspirational and personal — and should foster
-            intuitive human wellbeing.
+            M/S MORPHEME STUDIOS is an architecture design service firm or incorporation of art. The firm reflects an enduring dedication to contemporary design principles and its applications.
           </p>
         </Reveal>
       </header>

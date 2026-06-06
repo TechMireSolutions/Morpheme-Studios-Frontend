@@ -11,11 +11,10 @@ import Home from './pages/Home.jsx'
 import Studio from './pages/Studio.jsx'
 import Projects from './pages/Projects.jsx'
 import ProjectDetail from './pages/ProjectDetail.jsx'
-import Journal from './pages/Journal.jsx'
+import Blog from './pages/Blog.jsx'
 import Careers from './pages/Careers.jsx'
 import Contact from './pages/Contact.jsx'
 import Terms from './pages/Terms.jsx'
-import Privacy from './pages/Privacy.jsx'
 import NotFound from './pages/NotFound.jsx'
 
 export default function App() {
@@ -40,15 +39,14 @@ export default function App() {
           <Route path="/studio" element={<Studio />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/projects/:slug" element={<ProjectDetail />} />
-          <Route path="/journal" element={<Journal />} />
+          <Route path="/blog" element={<Blog />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/terms" element={<Terms />} />
-          <Route path="/privacy" element={<Privacy />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
-      <Footer hideCTA={['/journal', '/careers', '/contact', '/terms', '/privacy'].includes(location.pathname)} />
+      <Footer hideCTA={['/blog', '/careers', '/contact', '/terms'].includes(location.pathname)} />
     </>
   )
 }

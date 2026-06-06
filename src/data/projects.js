@@ -100,7 +100,7 @@ export const projects = [
     category: 'architecture',
     type: 'Architecture',
     status: 'In Progress',
-    cover: img.curveArch,
+    cover: '/assets/projects/iconic-mosque.webp',
     gallery: [img.curveArch, img.museum, img.facadeWhite, img.pavilion],
     excerpt:
       'A contemporary mosque whose folded shell renders light itself as the primary building material.',
@@ -148,7 +148,7 @@ export const projects = [
     category: 'architecture',
     type: 'Master Plan',
     status: 'In Progress',
-    cover: img.cityDusk,
+    cover: '/assets/projects/city-by-sea.jpg',
     gallery: [img.cityDusk, img.towerGlass, img.modernBuild, img.facadeWhite],
     excerpt:
       'A waterfront mixed-use district — living, working and leisure threaded along a new public promenade.',
@@ -282,7 +282,7 @@ export const projects = [
     category: 'retail',
     type: 'Retail',
     status: 'Completed',
-    cover: img.retail2,
+    cover: '/assets/projects/bunify.jpg',
     gallery: [img.retail2, img.interior4, img.cafe],
     excerpt: 'A playful and modern burger outlet design.',
     services: ['Interior Design', 'Retail'],
