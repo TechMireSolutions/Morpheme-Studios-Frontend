@@ -70,7 +70,19 @@ export default function Home() {
       {/* ---------------- HERO ---------------- */}
       <section ref={heroRef} className="hero">
         <div className="hero-bg">
-          <img src="/assets/hero-pynnacles.jpg" alt="Pynnacles Close Residences, London" />
+          <picture>
+            {/* 
+                Performance Suggestion: Serve optimized formats and sizes based on viewport.
+                Example: <source srcSet="/assets/hero-mobile.webp" media="(max-width: 768px)" type="image/webp" /> 
+            */}
+            <img 
+              src="/assets/hero-pynnacles.jpg" 
+              alt="Pynnacles Close Residences — high-end architecture in London" 
+              fetchpriority="high"
+              loading="eager"
+              decoding="async"
+            />
+          </picture>
           <div className="hero-scrim" />
         </div>
 
