@@ -71,13 +71,9 @@ export default function Home() {
       <section ref={heroRef} className="hero">
         <div className="hero-bg">
           <picture>
-            {/* 
-                Performance Suggestion: Serve optimized formats and sizes based on viewport.
-                Example: <source srcSet="/assets/hero-mobile.webp" media="(max-width: 768px)" type="image/webp" /> 
-            */}
             <img 
               src="/assets/hero-pynnacles.jpg" 
-              alt="Pynnacles Close Residences — high-end architecture in London" 
+              alt="Pynnacles Close Residences — High-end residential architecture in London" 
               fetchpriority="high"
               loading="eager"
               decoding="async"
@@ -94,12 +90,12 @@ export default function Home() {
             <span className="hero-line"><span className="serif-italic">human wellbeing.</span></span>
           </h1>
           <div className="hero-meta">
-            <p className="lead hero-sub maxw-720">
+            <p className="lead hero-sub">
               Morpheme Studios is an architecture and design practice creating clear,
               inspirational and personal spaces across cultural, corporate and
               residential sectors.
             </p>
-            <div className="flex gap-s mt-m">
+            <div className="flex gap-s mt-m hero-btns">
               <Link to="/projects" className="btn btn-fill hero-btn" data-cursor>
                 Explore Projects <span className="arrow">→</span>
               </Link>
