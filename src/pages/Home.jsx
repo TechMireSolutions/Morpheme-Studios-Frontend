@@ -158,9 +158,9 @@ export default function Home() {
             <Reveal
               key={p.slug}
               variant="fade"
-              className={`featured-item ${i === 0 ? 'is-wide' : ''}`}
+              className="featured-item"
             >
-              <ProjectCard project={p} index={i} ratio={i === 0 ? 'ratio-16-9' : 'ratio-3-4'} />
+              <ProjectCard project={p} index={i} ratio="ratio-4-3" />
             </Reveal>
           ))}
         </div>
