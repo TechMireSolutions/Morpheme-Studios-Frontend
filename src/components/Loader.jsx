@@ -10,6 +10,7 @@ export default function Loader({ onDone }) {
 
   useGSAP(
     () => {
+      if (!root.current || !count.current || !word.current) return
       const obj = { v: 0 }
       const tl = gsap.timeline({ onComplete: onDone })
       tl.to(obj, {

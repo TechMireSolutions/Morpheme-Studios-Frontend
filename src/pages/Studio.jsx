@@ -5,6 +5,7 @@ import { gsap } from '../lib/gsap.js'
 import Reveal from '../components/Reveal.jsx'
 import AnimatedHeading from '../components/AnimatedHeading.jsx'
 import Parallax from '../components/Parallax.jsx'
+import ResilientImage from '../components/ResilientImage.jsx'
 import { team, approach, stats, offices } from '../data/studio.js'
 import img from '../data/images.js'
 
@@ -12,6 +13,7 @@ export default function Studio() {
   const headerRef = useRef(null)
 
   useGSAP(() => {
+    if (!headerRef.current) return
     const tl = gsap.timeline()
     tl.from('.page-title .ah-word > span', {
       yPercent: 110,
@@ -35,7 +37,7 @@ export default function Studio() {
   }, { scope: headerRef })
 
   return (
-    <div className="page" ref={headerRef}>
+    <div className="page page-studio" ref={headerRef}>
       {/* Page header */}
       <header className="page-head wrap">
         <Reveal><p className="label">The Studio</p></Reveal>
@@ -92,15 +94,23 @@ export default function Studio() {
             <h2 className="h-lg">Leadership &amp; partners</h2>
           </Reveal>
 
-          <div className="grid cols-3 keep-2 team-grid">
+          <div className="team-grid" role="list" aria-label="Leadership and partners">
             {team.map((m) => (
-              <Reveal variant="fade" key={m.name} className="member">
-                <div className="media zoom ratio-4-3">
-                  <img src={m.image} alt={m.name} loading="lazy" />
-                </div>
-                <h3 className="member-name h-md">{m.name}</h3>
-                <p className="label member-role">{m.role}</p>
-                <p className="body-muted member-note">{m.note}</p>
+              <Reveal variant="fade" key={m.name} className="team-card-wrap">
+                <article className="team-card" role="listitem">
+                  <div className="team-card-media">
+                    <ResilientImage
+                      src={m.image}
+                      alt={m.name}
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="team-card-body">
+                    <p className="label team-role">{m.role}</p>
+                    <h3 className="member-name h-md">{m.name}</h3>
+                    <p className="body-muted member-note">{m.note}</p>
+                  </div>
+                </article>
               </Reveal>
             ))}
           </div>

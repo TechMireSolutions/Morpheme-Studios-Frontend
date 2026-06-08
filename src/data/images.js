@@ -4,6 +4,8 @@ const u = (id, w = 1600) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=80`
 
 export const img = {
+  // Home hero (centralised reference)
+  hero: '/assets/hero-pynnacles.jpg',
   // Architecture / exteriors
   facadeWhite: u('1487958449943-2429e8be8625'),
   towerGlass: u('1496307653780-42ee777d4833'),
@@ -32,7 +34,7 @@ export const img = {
   retail2: '/assets/projects/bunify.jpg',
   cafe: u('1554118811-1e0d58224f24'),
   // Texture / studio
-  studio: u('1497366216548-37526070297c'),
+  studio: '/assets/architecture.jpg',
   studio2: u('1497366811353-6870744d04b2'),
   model: u('1507003211169-0a1dd7228f2d'),
   team: u('1556761175-b413da4baf72'),

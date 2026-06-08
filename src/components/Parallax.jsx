@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { useGSAP } from '@gsap/react'
 import { gsap } from '../lib/gsap.js'
+import ResilientImage from './ResilientImage.jsx'
 
 // Wraps an image and gives it a gentle parallax drift on scroll.
 export default function Parallax({ src, alt, ratio = 'ratio-4-3', amount = 14, className = '', rounded = true }) {
@@ -9,6 +10,7 @@ export default function Parallax({ src, alt, ratio = 'ratio-4-3', amount = 14, c
 
   useGSAP(
     () => {
+      if (!wrap.current || !imgRef.current) return
       gsap.fromTo(
         imgRef.current,
         { yPercent: -amount },
@@ -31,14 +33,14 @@ export default function Parallax({ src, alt, ratio = 'ratio-4-3', amount = 14, c
     <div
       ref={wrap}
       className={`media ${ratio} ${className}`}
-      style={{ borderRadius: rounded ? 'var(--radius)' : 0 }}
+      style={{ borderRadius: rounded ? 'var(--radius)' : 0, overflow: 'hidden' }}
     >
-      <img
+      <ResilientImage
         ref={imgRef}
         src={src}
         alt={alt}
         loading="lazy"
-        style={{ height: `${100 + amount * 2}%`, marginTop: `-${amount}%` }}
+        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
       />
     </div>
   )

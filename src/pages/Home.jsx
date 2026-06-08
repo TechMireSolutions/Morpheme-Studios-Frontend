@@ -22,6 +22,7 @@ export default function Home() {
   // Hero intro + background parallax
   useGSAP(
     () => {
+      if (!heroRef.current) return
       // Intro sequence
       const tl = gsap.timeline({ delay: 2.5 }) // after loader completes its lift
       tl.from('.hero-bg', {
@@ -55,8 +56,9 @@ export default function Home() {
       // Mouse parallax
       const onMove = (e) => {
         const { clientX: x, clientY: y } = e
-        const xPos = (x / window.innerWidth - 0.5) * 40
-        const yPos = (y / window.innerHeight - 0.5) * 40
+        // Reduce amplitude to avoid pushing CTA elements outside the hero
+        const xPos = (x / window.innerWidth - 0.5) * 20
+        const yPos = (y / window.innerHeight - 0.5) * 20
         gsap.to('.hero-content', { x: xPos, y: yPos, duration: 1.5, ease: 'power2.out' })
       }
       window.addEventListener('mousemove', onMove)
@@ -72,11 +74,12 @@ export default function Home() {
         <div className="hero-bg">
           <picture>
             <img 
-              src="/assets/hero-pynnacles.jpg" 
+              src={img.hero}
               alt="Pynnacles Close Residences — High-end residential architecture in London" 
               fetchpriority="high"
               loading="eager"
               decoding="async"
+              onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = '/assets/architecture.jpg' }}
             />
           </picture>
           <div className="hero-scrim" />
@@ -226,6 +229,7 @@ function ServicesList() {
 
   useGSAP(
     () => {
+      if (!ref.current || !previewRef.current) return
       const setX = gsap.quickTo(previewRef.current, 'x', { duration: 0.5, ease: 'power3' })
       const setY = gsap.quickTo(previewRef.current, 'y', { duration: 0.5, ease: 'power3' })
       const onMove = (e) => {
@@ -284,6 +288,7 @@ function Counter({ value, suffix }) {
   const ref = useRef(null)
   useGSAP(
     () => {
+      if (!ref.current) return
       const target = parseInt(value, 10)
       const obj = { v: 0 }
       gsap.to(obj, {

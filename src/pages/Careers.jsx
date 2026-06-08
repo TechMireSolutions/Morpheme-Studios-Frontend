@@ -22,6 +22,7 @@ export default function Careers() {
   const headerRef = useRef(null)
 
   useGSAP(() => {
+    if (!headerRef.current) return
     const tl = gsap.timeline()
     tl.from('.page-title .ah-word > span', {
       yPercent: 110,

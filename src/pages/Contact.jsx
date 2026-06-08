@@ -48,22 +48,22 @@ export default function Contact() {
             ) : (
               <form className="contact-form" onSubmit={submit}>
                 <div className="field">
-                  <label>Full name</label>
-                  <input required value={form.name} onChange={update('name')} placeholder="Your name" />
+                  <label htmlFor="contact-name">Full name</label>
+                  <input id="contact-name" name="name" required value={form.name} onChange={update('name')} placeholder="Your name" />
                 </div>
                 <div className="field-row">
                   <div className="field">
-                    <label>Email</label>
-                    <input type="email" required value={form.email} onChange={update('email')} placeholder="you@email.com" />
+                    <label htmlFor="contact-email">Email</label>
+                    <input id="contact-email" name="email" type="email" required value={form.email} onChange={update('email')} placeholder="you@email.com" />
                   </div>
                   <div className="field">
-                    <label>Phone</label>
-                    <input value={form.phone} onChange={update('phone')} placeholder="Optional" />
+                    <label htmlFor="contact-phone">Phone</label>
+                    <input id="contact-phone" name="phone" value={form.phone} onChange={update('phone')} placeholder="Optional" />
                   </div>
                 </div>
                 <div className="field">
-                  <label>Message</label>
-                  <textarea required rows={5} value={form.message} onChange={update('message')} placeholder="Tell us about your project…" />
+                  <label htmlFor="contact-message">Message</label>
+                  <textarea id="contact-message" name="message" required rows={5} value={form.message} onChange={update('message')} placeholder="Tell us about your project…" />
                 </div>
                 <button type="submit" className="btn btn-fill" data-cursor>
                   Send message <span className="arrow">→</span>
@@ -97,9 +97,9 @@ export default function Contact() {
             <div className="contact-block">
               <p className="label">Follow</p>
               <div className="contact-socials">
-                <a href="#" className="link-u">Instagram</a>
-                <a href="#" className="link-u">LinkedIn</a>
-                <a href="#" className="link-u">Facebook</a>
+                <a href="https://instagram.com/morphemestudios" target="_blank" rel="noreferrer" className="link-u">Instagram</a>
+                <a href="https://linkedin.com/company/morphemestudios" target="_blank" rel="noreferrer" className="link-u">LinkedIn</a>
+                <a href="https://facebook.com/morphemestudios" target="_blank" rel="noreferrer" className="link-u">Facebook</a>
               </div>
             </div>
           </Reveal>

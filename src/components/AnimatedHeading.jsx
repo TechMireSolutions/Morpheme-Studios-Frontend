@@ -17,7 +17,9 @@ export default function AnimatedHeading({
 
   useGSAP(
     () => {
+      if (!ref.current) return
       const words = ref.current.querySelectorAll('.ah-word > span')
+      if (!words.length) return
       gsap.set(words, { yPercent: 110 })
       gsap.to(words, {
         yPercent: 0,

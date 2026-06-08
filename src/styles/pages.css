@@ -42,6 +42,57 @@
 }
 .page-head-sub { font-size: clamp(1.1rem, 1.8vw, 1.4rem); line-height: 1.5; color: var(--muted); }
 
+.page-studio .page-head {
+  padding-top: clamp(100px, 14vw, 180px);
+  padding-bottom: clamp(32px, 5vw, 60px);
+}
+.page-studio .page-head .page-title {
+  max-width: 60ch;
+}
+.page-studio .page-head-sub {
+  max-width: 52ch;
+}
+
+@media (max-width: 900px) {
+  .page-studio .page-head {
+    padding-top: 84px;
+    padding-bottom: 32px;
+  }
+  .page-studio .page-head .page-title {
+    font-size: clamp(2.4rem, 9vw, 4rem);
+    line-height: 1.05;
+  }
+  .page-studio .page-head-sub {
+    font-size: 1rem;
+    max-width: 42ch;
+  }
+}
+
+@media (max-width: 600px) {
+  .page-studio .page-head {
+    padding-top: 72px;
+    padding-bottom: 28px;
+  }
+  .page-studio .page-head .page-title {
+    font-size: clamp(2.2rem, 11vw, 3.5rem);
+    line-height: 1.15;
+  }
+  .page-studio .page-head-sub {
+    font-size: 0.98rem;
+  }
+}
+
+/* Lead image wrapper — constrain to prevent overflow */
+.lead-image-wrap {
+  width: 100%;
+  overflow: hidden;
+}
+
+.careers-image-wrap {
+  width: 100%;
+  overflow: hidden;
+}
+
 .section-head { margin-bottom: clamp(56px, 8vw, 100px); display: flex; flex-direction: column; gap: 16px; }
 .section-head .h-lg { max-width: 22ch; }
 .section-head-link { margin-top: 14px; width: fit-content; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 700; }
@@ -51,6 +102,7 @@
   position: relative;
   width: 100%;
   min-height: 100svh;
+  min-height: 100vh;
   display: flex;
   align-items: flex-end;
   color: var(--bone);
@@ -63,6 +115,7 @@
   top: 0; left: 0; 
   width: 100%; height: 100%; 
   z-index: 0; 
+  background: var(--paper-dark);
 }
 .hero-bg img { 
   display: block;
@@ -70,6 +123,9 @@
   object-fit: cover; 
   object-position: center;
 }
+
+/* Ensure the image always fills and provides a stable box (avoids visible alt collapse) */
+.hero-bg img { min-width: 100%; min-height: 100%; }
 
 .hero-scrim {
   position: absolute; 
@@ -94,6 +150,11 @@
   font-weight: 400;
 }
 
+/* Each hero visual line should be a block so words do not run together.
+   The inner span remains inline-block for GSAP transforms. */
+.hero-title .hero-line { display: block; overflow: hidden; }
+.hero-title .hero-line > span { display: inline-block; }
+
 .hero-meta {
   display: flex;
   justify-content: space-between;
@@ -101,6 +162,28 @@
   gap: 32px;
   margin-top: clamp(40px, 7vw, 80px);
   flex-wrap: wrap;
+}
+
+/* Make CTA group layout more robust to small shifts (parallax/transform) so
+   buttons are not clipped at the viewport edge. Keep buttons grouped and
+   allow them to wrap cleanly on smaller screens. */
+.hero-meta .hero-btns {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px;
+}
+.hero-meta .hero-btn {
+  white-space: nowrap;
+  color: var(--bone);
+  border-color: rgba(255, 255, 255, 0.78);
+  background: rgba(255, 255, 255, 0.08);
+  transition: background 0.4s var(--ease), border-color 0.4s var(--ease), transform 0.4s var(--ease);
+}
+.hero-meta .hero-btn:hover,
+.hero-meta .hero-btn:focus-visible {
+  background: rgba(255, 255, 255, 0.16);
+  outline: none;
 }
 
 .hero-sub { max-width: 42ch; color: rgba(244,241,234,0.9); line-height: 1.4; font-size: clamp(1rem, 1.6vw, 1.25rem); }
@@ -111,14 +194,14 @@
 }
 
 @media (max-width: 768px) {
-  .hero { min-height: 580px; }
   .hero-meta { flex-direction: column; align-items: flex-start; gap: 24px; }
+  .hero-meta .hero-btns { width: 100%; }
   .hero-btn { width: 100%; justify-content: center; }
   .hero-cue { display: none; }
 }
 
 @media (max-width: 480px) {
-  .hero-title { font-size: 2.8rem; }
+  .hero-title { font-size: 2.8rem; line-height: 0.98; }
   .hero-content { padding-bottom: 48px; }
 }
 
@@ -133,6 +216,14 @@
   gap: 16px;
   opacity: 0.7;
   z-index: 2;
+}
+
+.hero-cue-line {
+  display: block;
+  width: 1px;
+  height: 44px;
+  background: currentColor;
+  opacity: 0.5;
 }
 
 /* =================== PROJECT DETAIL =================== */
@@ -182,6 +273,76 @@
 .featured-item { width: 100%; }
 @media (max-width: 900px) { .featured-grid { grid-template-columns: 1fr; gap: 48px; } }
 
+/* =================== STUDIO — TEAM =================== */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(260px, 1fr));
+  gap: clamp(24px, 4vw, 40px);
+}
+.team-card {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 24px;
+  overflow: hidden;
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease), border-color 0.4s var(--ease);
+}
+.team-card:hover,
+.team-card:focus-within {
+  transform: translateY(-8px);
+  border-color: rgba(255,255,255,0.18);
+  box-shadow: 0 36px 80px rgba(0,0,0,0.18);
+}
+.team-card-media {
+  overflow: hidden;
+  position: relative;
+}
+.team-card-media img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease);
+}
+.team-card:hover .team-card-media img,
+.team-card:focus-within .team-card-media img {
+  transform: scale(1.04);
+}
+.team-card-body {
+  padding: clamp(24px, 2.5vw, 32px);
+  display: grid;
+  gap: 12px;
+}
+.team-card {
+  min-height: 0;
+}
+.team-grid {
+  align-items: start;
+}
+.member-note {
+  max-width: 56ch;
+}
+.team-role {
+  color: var(--clay);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+.member-name {
+  margin: 0;
+}
+.member-note {
+  color: rgba(244,241,234,0.82);
+  line-height: 1.75;
+}
+@media (max-width: 1100px) {
+  .team-grid { grid-template-columns: repeat(2, minmax(260px, 1fr)); }
+}
+@media (max-width: 720px) {
+  .team-grid { grid-template-columns: 1fr; }
+}
+
 /* =================== APPLICATION FORM =================== */
 .application { background: var(--bone); }
 .custom-select {
@@ -215,6 +376,13 @@ input[type="file"]::-webkit-file-upload-button {
   letter-spacing: 0.1em;
   margin-right: 12px;
   cursor: pointer;
+}
+@media (max-width: 768px) {
+  .application .contact-grid { grid-template-columns: 1fr; gap: 32px; }
+  .application .field-row { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .application .contact-form .btn { width: 100%; }
 }
 
 /* =================== SERVICES =================== */
@@ -348,6 +516,8 @@ input[type="file"]::-webkit-file-upload-button {
 .contact-offices span { font-size: 0.95rem; line-height: 1.5; color: var(--muted); }
 .contact-socials { display: flex; gap: 32px; }
 @media (max-width: 1000px) { .contact-grid { grid-template-columns: 1fr; } .field-row { grid-template-columns: 1fr; } }
+@media (max-width: 768px) { .contact-form { gap: 24px; } .field-row { grid-template-columns: 1fr; } .contact-aside { gap: 40px; } }
+@media (max-width: 480px) { .contact-form .btn { width: 100%; } .contact-grid { gap: 32px; } }
 
 /* =================== 404 =================== */
 .notfound { min-height: 80svh; display: flex; align-items: center; }

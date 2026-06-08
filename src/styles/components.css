@@ -130,7 +130,7 @@
 /* ---------- Overlay menu ---------- */
 .menu {
   position: fixed; inset: 0;
-  z-index: 880;
+  z-index: 1001;
   background: var(--paper-dark);
   color: var(--bone-on-dark);
   clip-path: inset(0 0 100% 0);
@@ -166,12 +166,14 @@
   font-size: 0.85rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
+  width: 100%;
+  overflow: hidden;
 }
 .menu-socials { display: flex; gap: 32px; }
 
 /* ---------- Marquee ---------- */
 .marquee { overflow: hidden; white-space: nowrap; width: 100%; padding-block: 1.5em; border-bottom: 1px solid var(--line-soft); }
-.marquee-track { display: inline-flex; will-change: transform; }
+.marquee-track { display: inline-flex; will-change: transform; width: 100%; }
 .marquee-item {
   display: inline-flex;
   align-items: center;
@@ -181,6 +183,7 @@
   padding-right: 0.5em;
   text-transform: lowercase;
   font-style: italic;
+  flex-shrink: 0;
 }
 .marquee-dot { color: var(--clay); font-size: 0.3em; margin: 0 0.8em; transform: translateY(-0.1em); }
 

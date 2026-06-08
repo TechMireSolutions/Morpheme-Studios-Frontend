@@ -22,6 +22,7 @@ export default function Reveal({
   useGSAP(
     () => {
       const el = ref.current
+      if (!el) return
       const common = {
         scrollTrigger: { trigger: el, start: 'top 85%', once: true },
         ease: 'power3.out',
