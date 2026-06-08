@@ -122,28 +122,6 @@ export default function Home() {
         />
       </section>
 
-      {/* ---------------- INTRO / ABOUT ---------------- */}
-      <section className="section intro">
-        <div className="wrap intro-grid">
-          <Reveal className="intro-left">
-            <p className="label">(The Philosophy)</p>
-          </Reveal>
-          <div className="intro-right">
-            <AnimatedHeading
-              as="h2"
-              className="h-xl intro-statement"
-              text="M/S MORPHEME STUDIOS is an architecture design service firm or incorporation of art. The firm reflects an enduring dedication to contemporary design principles and its applications."
-            />
-            <Reveal variant="fade" delay={0.2} className="intro-foot">
-              <p className="lead body-muted maxw-900">
-                WE operates across various scales and sectors, specializing in the creation of transformative spaces, including cultural, corporate, and residential environments. Our designs emphasize harmony with the surrounding context, ensuring that each project resonates with its environment while enhancing functionality and aesthetics. By integrating innovative design principles, we aims to foster meaningful interactions and experiences within the spaces we create.
-              </p>
-              <Link to="/studio" className="link-u intro-link mt-m" data-cursor>Our Story →</Link>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
       {/* ---------------- FEATURED PROJECTS ---------------- */}
       <section className="section featured">
         <div className="wrap">

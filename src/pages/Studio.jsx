@@ -41,11 +41,6 @@ export default function Studio() {
       {/* Page header */}
       <header className="page-head wrap">
         <Reveal><p className="label">The Studio</p></Reveal>
-        <AnimatedHeading
-          as="h1"
-          className="display page-title"
-          text="We create clear, inspirational and personal architecture of high quality which fosters intuitive human wellbeing."
-        />
         <Reveal variant="fade" delay={0.2}>
           <p className="lead maxw-720 page-head-sub">
             M/S MORPHEME STUDIOS is an architecture design service firm or incorporation of art. The firm reflects an enduring dedication to contemporary design principles and its applications.
@@ -58,32 +53,6 @@ export default function Studio() {
         <Reveal variant="clip">
           <Parallax src={img.studio} alt="Inside the studio" ratio="ratio-16-9" />
         </Reveal>
-      </section>
-
-      {/* Philosophy two-column */}
-      <section className="section">
-        <div className="wrap two-col">
-          <Reveal><p className="label">Philosophy</p></Reveal>
-          <div>
-            <AnimatedHeading
-              as="h2"
-              className="h-xl"
-              text="We design with the most important material of all — light."
-            />
-            <Reveal variant="fade" delay={0.15} className="two-col-body">
-              <p className="lead body-muted">
-                Every project begins with people and ends with detail. Between the two
-                we chase a single, clear idea: one concept strong enough to hold the
-                whole building together, refined until nothing can be removed.
-              </p>
-              <p className="lead body-muted">
-                Founded in London and now working across the UK, the UAE and Pakistan,
-                Morpheme Studios operates as one studio across borders — sharing a
-                language of restraint, craft and warmth.
-              </p>
-            </Reveal>
-          </div>
-        </div>
       </section>
 
       {/* Team */}
