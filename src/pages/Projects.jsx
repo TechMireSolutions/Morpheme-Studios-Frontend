@@ -2,7 +2,6 @@ import { useMemo, useState, useRef } from 'react'
 import { useGSAP } from '@gsap/react'
 import { gsap } from '../lib/gsap.js'
 import Reveal from '../components/Reveal.jsx'
-import AnimatedHeading from '../components/AnimatedHeading.jsx'
 import ProjectCard from '../components/ProjectCard.jsx'
 import { projects, categories } from '../data/projects.js'
 
@@ -17,31 +16,30 @@ export default function Projects() {
 
   useGSAP(() => {
     const tl = gsap.timeline()
-    tl.from('.page-title .ah-word > span', {
+    tl.from('.page-title', {
       yPercent: 110,
       duration: 1.2,
       ease: 'power4.out',
       stagger: 0.08,
     })
-    .from('.page-head .label, .page-head-sub', {
-      y: 20,
-      autoAlpha: 0,
-      duration: 1,
-      stagger: 0.15,
-      ease: 'power3.out'
-    }, '-=0.8')
-    .from('.filters', {
-      autoAlpha: 0,
-      y: 10,
-      duration: 0.8
-    }, '-=0.4')
+      .from('.page-head .label, .page-head-sub', {
+        y: 20,
+        autoAlpha: 0,
+        duration: 1,
+        stagger: 0.15,
+        ease: 'power3.out'
+      }, '-=0.8')
+      .from('.filters', {
+        autoAlpha: 0,
+        y: 10,
+        duration: 0.8
+      }, '-=0.4')
   }, { scope: headerRef })
 
   return (
     <div className="page" ref={headerRef}>
       <header className="page-head wrap">
         <Reveal><p className="label">Selected Work</p></Reveal>
-        <AnimatedHeading as="h1" className="display page-title" text="Projects" />
         <Reveal variant="fade" delay={0.15}>
           <p className="lead maxw-720 page-head-sub">
             Cultural, corporate and residential work across three continents — each

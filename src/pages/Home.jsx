@@ -4,7 +4,6 @@ import { useGSAP } from '@gsap/react'
 import { gsap } from '../lib/gsap.js'
 
 import Reveal from '../components/Reveal.jsx'
-import AnimatedHeading from '../components/AnimatedHeading.jsx'
 import Marquee from '../components/Marquee.jsx'
 import ProjectCard from '../components/ProjectCard.jsx'
 import Parallax from '../components/Parallax.jsx'
@@ -30,14 +29,14 @@ export default function Home() {
         duration: 2.5,
         ease: 'power4.out',
       })
-      .from('.hero-line > span', {
-        yPercent: 110,
-        duration: 1.4,
-        ease: 'power4.out',
-        stagger: 0.1,
-      }, '-=1.8')
-      .from('.hero-meta > *', { y: 30, autoAlpha: 0, duration: 1, stagger: 0.15, ease: 'power3.out' }, '-=0.8')
-      .from('.hero-cue', { autoAlpha: 0, duration: 1 }, '-=0.5')
+        .from('.hero-line > span', {
+          yPercent: 110,
+          duration: 1.4,
+          ease: 'power4.out',
+          stagger: 0.1,
+        }, '-=1.8')
+        .from('.hero-meta > *', { y: 30, autoAlpha: 0, duration: 1, stagger: 0.15, ease: 'power3.out' }, '-=0.8')
+        .from('.hero-cue', { autoAlpha: 0, duration: 1 }, '-=0.5')
 
       // Scroll animations
       gsap.to('.hero-bg img', {
@@ -73,9 +72,9 @@ export default function Home() {
       <section ref={heroRef} className="hero">
         <div className="hero-bg">
           <picture>
-            <img 
+            <img
               src={img.hero}
-              alt="Pynnacles Close Residences — High-end residential architecture in London" 
+              alt="Pynnacles Close Residences — High-end residential architecture in London"
               fetchpriority="high"
               loading="eager"
               decoding="async"

@@ -24,36 +24,35 @@ export default function Careers() {
   useGSAP(() => {
     if (!headerRef.current) return
     const tl = gsap.timeline()
-    tl.from('.page-title .ah-word > span', {
+    tl.from('.page-title', {
       yPercent: 110,
       duration: 1.2,
       ease: 'power4.out',
       stagger: 0.08,
     })
-    .from('.page-head .label, .page-head-sub', {
-      y: 20,
-      autoAlpha: 0,
-      duration: 1,
-      stagger: 0.15,
-      ease: 'power3.out'
-    }, '-=0.8')
-    .from('.careers-image-wrap', {
-      scale: 1.1,
-      autoAlpha: 0,
-      duration: 1.5,
-      ease: 'power2.out'
-    }, '-=1.2')
+      .from('.page-head .label, .page-head-sub', {
+        y: 20,
+        autoAlpha: 0,
+        duration: 1,
+        stagger: 0.15,
+        ease: 'power3.out'
+      }, '-=0.8')
+      .from('.careers-image-wrap', {
+        scale: 1.1,
+        autoAlpha: 0,
+        duration: 1.5,
+        ease: 'power2.out'
+      }, '-=1.2')
   }, { scope: headerRef })
 
   return (
     <div className="page" ref={headerRef}>
       <header className="page-head wrap">
         <Reveal><p className="label">Careers</p></Reveal>
-        <AnimatedHeading as="h1" className="display page-title" text="Build with us." />
         <Reveal variant="fade" delay={0.15}>
           <p className="lead maxw-720 page-head-sub">
-            Morpheme Studios is always looking for talented architects, interior architects 
-            and interns to join our team. You will enjoy working in an international, 
+            Morpheme Studios is always looking for talented architects, interior architects
+            and interns to join our team. You will enjoy working in an international,
             creative and experimental studio in London and Dubai.
           </p>
         </Reveal>
@@ -70,9 +69,9 @@ export default function Careers() {
         <div className="wrap maxw-900">
           <Reveal>
             <p className="lead body-muted">
-              Our teams are inclusive and embrace different backgrounds and expertise. 
-              We are always looking for creative professionals in the AEC industry. 
-              Please send your CV, motivation letter and portfolio (not more than 10MB) 
+              Our teams are inclusive and embrace different backgrounds and expertise.
+              We are always looking for creative professionals in the AEC industry.
+              Please send your CV, motivation letter and portfolio (not more than 10MB)
               via the form below.
             </p>
           </Reveal>

@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import Reveal from '../components/Reveal.jsx'
-import AnimatedHeading from '../components/AnimatedHeading.jsx'
 import { offices } from '../data/studio.js'
 
 export default function Contact() {
@@ -18,11 +17,6 @@ export default function Contact() {
     <div className="page page-contact">
       <header className="page-head wrap">
         <Reveal><p className="label">Contact</p></Reveal>
-        <AnimatedHeading
-          as="h1"
-          className="display page-title"
-          text="Let’s talk."
-        />
         <Reveal variant="fade" delay={0.15}>
           <p className="lead maxw-720 page-head-sub">
             Tell us about your project, your site or just an idea. We read everything

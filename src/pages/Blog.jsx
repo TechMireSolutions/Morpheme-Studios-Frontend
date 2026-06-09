@@ -3,7 +3,6 @@ import { useRef } from 'react'
 import { useGSAP } from '@gsap/react'
 import { gsap } from '../lib/gsap.js'
 import Reveal from '../components/Reveal.jsx'
-import AnimatedHeading from '../components/AnimatedHeading.jsx'
 import { blog } from '../data/blog.js'
 
 export default function Blog() {
@@ -18,26 +17,25 @@ export default function Blog() {
       ease: 'power4.out',
       stagger: 0.08,
     })
-    .from('.page-head .label, .page-head-sub', {
-      y: 20,
-      autoAlpha: 0,
-      duration: 1,
-      stagger: 0.15,
-      ease: 'power3.out'
-    }, '-=0.8')
-    .from('.jlead-wrap', {
-      y: 40,
-      autoAlpha: 0,
-      duration: 1.2,
-      ease: 'power3.out'
-    }, '-=0.6')
+      .from('.page-head .label, .page-head-sub', {
+        y: 20,
+        autoAlpha: 0,
+        duration: 1,
+        stagger: 0.15,
+        ease: 'power3.out'
+      }, '-=0.8')
+      .from('.jlead-wrap', {
+        y: 40,
+        autoAlpha: 0,
+        duration: 1.2,
+        ease: 'power3.out'
+      }, '-=0.6')
   }, { scope: headerRef })
 
   return (
     <div className="page" ref={headerRef}>
       <header className="page-head wrap">
         <Reveal><p className="label">Blog</p></Reveal>
-        <AnimatedHeading as="h1" className="display page-title" text="Blog" />
         <Reveal variant="fade" delay={0.15}>
           <p className="lead maxw-720 page-head-sub">
             Essays, studio news and the materials and ideas we keep returning to.
