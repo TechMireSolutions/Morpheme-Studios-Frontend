@@ -49,6 +49,8 @@ export default function Blog() {
           <Link to="/blog" className="jlead" data-cursor="Read">
             <div className="media zoom ratio-16-9 jlead-media">
               <img src={lead.image} alt={lead.title} />
+              {/* Dark-neutral circular badge over the hero, upper-left */}
+              <span className="read-badge" aria-hidden="true">• Read</span>
             </div>
             <div className="jlead-meta">
               <div className="jcard-top">

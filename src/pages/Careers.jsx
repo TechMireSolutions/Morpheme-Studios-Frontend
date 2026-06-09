@@ -240,7 +240,7 @@ export default function Careers() {
                   <input type="file" accept=".pdf" />
                 </div>
 
-                <div className="field flex items-center gap-s mt-s">
+                <div className="field-checkbox">
                   <input type="checkbox" id="terms" required className="checkbox" />
                   <label htmlFor="terms" className="label-ink" style={{ letterSpacing: '0.05em', textTransform: 'none' }}>
                     I agree to the Terms of Use*
