@@ -1,7 +1,12 @@
 // Central API client for the Morpheme Studios backend (Django + DRF).
-// Base URL is build-time configurable via VITE_API_URL; defaults to local dev.
+// Base URL is required via the VITE_API_URL environment variable.
+// Set it in .env (local dev) or in your deployment environment (production).
 
-export const API_ORIGIN = import.meta.env?.VITE_API_URL || 'http://localhost:8000'
+if (!import.meta.env.VITE_API_URL) {
+  console.error('[api] VITE_API_URL is not set. Create a .env file with VITE_API_URL=http://localhost:8000')
+}
+
+export const API_ORIGIN = import.meta.env.VITE_API_URL
 const BASE = API_ORIGIN + '/api/v1'
 
 // Absolutize a possibly-relative /media/ path (settings images bypass the serializer).
