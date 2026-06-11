@@ -1,8 +1,12 @@
 import { Link } from 'react-router-dom'
-import { offices } from '../data/studio.js'
 import Newsletter from './Newsletter.jsx'
+import { api } from '../lib/api.js'
+import { useApi } from '../lib/useApi.js'
+import { normalizeOffice } from '../lib/normalize.js'
 
 export default function Footer({ hideCTA = false }) {
+  const { data: offices } = useApi(
+    () => api.offices().then((rows) => rows.map(normalizeOffice)), [], { fallback: [] })
   return (
     <footer className="footer dark">
       <div className="wrap">

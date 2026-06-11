@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import Reveal from '../components/Reveal.jsx'
 import Seo from '../components/Seo.jsx'
-import { offices } from '../data/studio.js'
 import { api, ApiError } from '../lib/api.js'
+import { useApi } from '../lib/useApi.js'
+import { normalizeOffice } from '../lib/normalize.js'
 
 export default function Contact() {
   const [sent, setSent] = useState(false)
@@ -10,6 +11,8 @@ export default function Contact() {
   const [error, setError] = useState(null)
   const [fieldErrors, setFieldErrors] = useState({})
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' })
+  const { data: offices } = useApi(
+    () => api.offices().then((rows) => rows.map(normalizeOffice)), [], { fallback: [] })
 
   const update = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }))
   const submit = async (e) => {

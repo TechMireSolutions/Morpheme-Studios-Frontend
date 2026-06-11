@@ -96,7 +96,7 @@ export default function Careers() {
 
       <section className="wrap section-tight careers-image-wrap">
         <Reveal variant="clip">
-          <Parallax src={img.studio2} alt="Studio culture" ratio="ratio-16-9" />
+          <Parallax src={CAREERS_IMG} alt="Studio culture" ratio="ratio-16-9" />
         </Reveal>
       </section>
 
@@ -122,14 +122,17 @@ export default function Careers() {
             <h2 className="h-lg">Current openings</h2>
           </Reveal>
           <ul className="roles">
-            {roles.map((r) => (
-              <Reveal variant="up" as="li" key={r.title} className="role-row" data-cursor="Apply">
+            {(roles || []).map((r) => (
+              <Reveal variant="up" as="li" key={r.slug || r.title} className="role-row" data-cursor="Apply">
                 <h3 className="role-title h-md">{r.title}</h3>
                 <span className="role-place body-muted">{r.place}</span>
-                <span className="label role-type">{r.type}</span>
+                <span className="label role-type">{r.employment_type}</span>
                 <span className="role-arrow">→</span>
               </Reveal>
             ))}
+            {roles && roles.length === 0 && (
+              <li className="body-muted">No open positions right now — send a speculative application below.</li>
+            )}
           </ul>
         </div>
       </section>
