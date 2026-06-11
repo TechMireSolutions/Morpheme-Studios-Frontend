@@ -3,9 +3,19 @@ import { useRef } from 'react'
 import { useGSAP } from '@gsap/react'
 import { gsap } from '../lib/gsap.js'
 import Reveal from '../components/Reveal.jsx'
-import { blog } from '../data/blog.js'
+import Seo from '../components/Seo.jsx'
+import { blog as bundledBlog } from '../data/blog.js'
+import { api } from '../lib/api.js'
+import { useApi } from '../lib/useApi.js'
+import { normalizePost } from '../lib/normalize.js'
 
 export default function Blog() {
+  const { data } = useApi(
+    () => api.blog({ page_size: 100 }).then((r) => (r.results || []).map(normalizePost)),
+    [],
+    { fallback: [] }
+  )
+  const blog = data && data.length ? data : bundledBlog
   const [lead, ...rest] = blog
   const headerRef = useRef(null)
 
@@ -34,6 +44,7 @@ export default function Blog() {
 
   return (
     <div className="page" ref={headerRef}>
+      <Seo title="Blog — Morpheme Studios" description="Essays, studio news and the materials and ideas we keep returning to." />
       <header className="page-head wrap">
         <Reveal><p className="label">Blog</p></Reveal>
         <Reveal variant="fade" delay={0.15}>
@@ -46,7 +57,7 @@ export default function Blog() {
       {/* Lead article */}
       <section className="wrap section-tight jlead-wrap">
         <Reveal variant="clip">
-          <Link to="/blog" className="jlead" data-cursor="Read">
+          <Link to={`/blog/${lead.slug}`} className="jlead" data-cursor="Read">
             <div className="media zoom ratio-16-9 jlead-media">
               <img src={lead.image} alt={lead.title} />
               {/* Dark-neutral circular badge over the hero, upper-left */}
@@ -70,7 +81,7 @@ export default function Blog() {
         <div className="wrap grid cols-3 keep-2 blog-grid">
           {rest.map((post) => (
             <Reveal variant="fade" key={post.slug}>
-              <Link to="/blog" className="jcard" data-cursor="Read">
+              <Link to={`/blog/${post.slug}`} className="jcard" data-cursor="Read">
                 <div className="media zoom ratio-4-3">
                   <img src={post.image} alt={post.title} loading="lazy" />
                 </div>

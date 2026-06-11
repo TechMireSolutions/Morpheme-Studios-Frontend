@@ -3,15 +3,27 @@ import { useGSAP } from '@gsap/react'
 import { gsap } from '../lib/gsap.js'
 import Reveal from '../components/Reveal.jsx'
 import ProjectCard from '../components/ProjectCard.jsx'
-import { projects, categories } from '../data/projects.js'
+import Seo from '../components/Seo.jsx'
+import { projects as bundledProjects, categories } from '../data/projects.js'
+import { api } from '../lib/api.js'
+import { useApi } from '../lib/useApi.js'
+import { normalizeProject } from '../lib/normalize.js'
 
 export default function Projects() {
   const [active, setActive] = useState('all')
   const headerRef = useRef(null)
 
+  // Fetch from the API; fall back to bundled data until content is migrated.
+  const { data } = useApi(
+    () => api.projects({ page_size: 100 }).then((r) => (r.results || []).map(normalizeProject)),
+    [],
+    { fallback: [] }
+  )
+  const projects = data && data.length ? data : bundledProjects
+
   const list = useMemo(
     () => (active === 'all' ? projects : projects.filter((p) => p.category === active)),
-    [active]
+    [active, projects]
   )
 
   useGSAP(() => {
@@ -38,6 +50,7 @@ export default function Projects() {
 
   return (
     <div className="page" ref={headerRef}>
+      <Seo title="Projects — Morpheme Studios" description="Cultural, corporate and residential architecture & design work across three continents." />
       <header className="page-head wrap">
         <Reveal><p className="label">Selected Work</p></Reveal>
         <Reveal variant="fade" delay={0.15}>

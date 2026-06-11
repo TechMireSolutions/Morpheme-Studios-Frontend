@@ -4,6 +4,7 @@ import { useGSAP } from '@gsap/react'
 import { gsap } from '../lib/gsap.js'
 
 import Reveal from '../components/Reveal.jsx'
+import Seo from '../components/Seo.jsx'
 import Marquee from '../components/Marquee.jsx'
 import ProjectCard from '../components/ProjectCard.jsx'
 import Parallax from '../components/Parallax.jsx'
@@ -68,6 +69,7 @@ export default function Home() {
 
   return (
     <div className="page page-home">
+      <Seo title="Morpheme Studios — Architecture & Design" description="An architecture & design practice creating clear, inspirational and personal spaces across cultural, corporate and residential sectors." />
       {/* ---------------- HERO ---------------- */}
       <section ref={heroRef} className="hero">
         <div className="hero-bg">

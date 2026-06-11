@@ -96,9 +96,9 @@ export default function Navbar() {
           <div className="menu-foot">
             <a href="mailto:connect@morphemestudios.com" className="link-u">connect@morphemestudios.com</a>
             <div className="menu-socials">
-              <a href="#" className="link-u">Instagram</a>
-              <a href="#" className="link-u">LinkedIn</a>
-              <a href="#" className="link-u">Facebook</a>
+              <a href="https://instagram.com/morphemestudios" target="_blank" rel="noopener noreferrer" className="link-u">Instagram</a>
+              <a href="https://linkedin.com/company/morphemestudios" target="_blank" rel="noopener noreferrer" className="link-u">LinkedIn</a>
+              <a href="https://facebook.com/morphemestudios" target="_blank" rel="noopener noreferrer" className="link-u">Facebook</a>
             </div>
           </div>
         </div>

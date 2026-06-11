@@ -45,6 +45,7 @@ const ResilientImage = forwardRef(function ResilientImage(
 
   return (
     <img
+      decoding="async"
       {...props}
       ref={combinedRef}
       src={currentSrc}

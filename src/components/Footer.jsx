@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { offices } from '../data/studio.js'
-import AnimatedHeading from './AnimatedHeading.jsx'
+import Newsletter from './Newsletter.jsx'
 
 export default function Footer({ hideCTA = false }) {
   return (
@@ -52,6 +52,8 @@ export default function Footer({ hideCTA = false }) {
               <li><a href="https://facebook.com/morphemestudios" target="_blank" rel="noopener noreferrer" className="link-u">Facebook</a></li>
             </ul>
           </div>
+
+          <Newsletter />
         </div>
 
         <div className="divider" />

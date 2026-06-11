@@ -1,20 +1,40 @@
 import { useState } from 'react'
 import Reveal from '../components/Reveal.jsx'
+import Seo from '../components/Seo.jsx'
 import { offices } from '../data/studio.js'
+import { api, ApiError } from '../lib/api.js'
 
 export default function Contact() {
   const [sent, setSent] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState(null)
+  const [fieldErrors, setFieldErrors] = useState({})
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' })
 
   const update = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }))
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault()
-    // Frontend-only demo: no backend wired up.
-    setSent(true)
+    setSubmitting(true)
+    setError(null)
+    setFieldErrors({})
+    try {
+      await api.createLead(form)
+      setSent(true)
+    } catch (err) {
+      if (err instanceof ApiError && err.fields) {
+        setFieldErrors(err.fields)
+        setError('Please check the highlighted fields.')
+      } else {
+        setError(err?.message || 'Something went wrong. Please try again.')
+      }
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
     <div className="page page-contact">
+      <Seo title="Contact — Morpheme Studios" description="Tell us about your project, your site or just an idea. London · Ras Al Khaimah · Karachi." />
       <header className="page-head wrap">
         <Reveal><p className="label">Contact</p></Reveal>
         <Reveal variant="fade" delay={0.15}>
@@ -40,15 +60,20 @@ export default function Contact() {
                 </button>
               </div>
             ) : (
-              <form className="contact-form" onSubmit={submit}>
+              <form className="contact-form" onSubmit={submit} noValidate>
+                {error && (
+                  <p className="form-error" role="alert">{error}</p>
+                )}
                 <div className="field">
                   <label htmlFor="contact-name">Full name</label>
-                  <input id="contact-name" name="name" required value={form.name} onChange={update('name')} placeholder="Your name" />
+                  <input id="contact-name" name="name" required value={form.name} onChange={update('name')} placeholder="Your name" aria-invalid={!!fieldErrors.name} />
+                  {fieldErrors.name && <span className="field-error">{fieldErrors.name[0]}</span>}
                 </div>
                 <div className="field-row">
                   <div className="field">
                     <label htmlFor="contact-email">Email</label>
-                    <input id="contact-email" name="email" type="email" required value={form.email} onChange={update('email')} placeholder="you@email.com" />
+                    <input id="contact-email" name="email" type="email" required value={form.email} onChange={update('email')} placeholder="you@email.com" aria-invalid={!!fieldErrors.email} />
+                    {fieldErrors.email && <span className="field-error">{fieldErrors.email[0]}</span>}
                   </div>
                   <div className="field">
                     <label htmlFor="contact-phone">Phone</label>
@@ -57,10 +82,11 @@ export default function Contact() {
                 </div>
                 <div className="field">
                   <label htmlFor="contact-message">Message</label>
-                  <textarea id="contact-message" name="message" required rows={5} value={form.message} onChange={update('message')} placeholder="Tell us about your project…" />
+                  <textarea id="contact-message" name="message" required rows={5} value={form.message} onChange={update('message')} placeholder="Tell us about your project…" aria-invalid={!!fieldErrors.message} />
+                  {fieldErrors.message && <span className="field-error">{fieldErrors.message[0]}</span>}
                 </div>
-                <button type="submit" className="btn btn-fill" data-cursor>
-                  Send message <span className="arrow">→</span>
+                <button type="submit" className="btn btn-fill" data-cursor disabled={submitting}>
+                  {submitting ? 'Sending…' : <>Send message <span className="arrow">→</span></>}
                 </button>
               </form>
             )}

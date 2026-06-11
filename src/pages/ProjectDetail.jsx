@@ -5,11 +5,22 @@ import { gsap } from '../lib/gsap.js'
 
 import Reveal from '../components/Reveal.jsx'
 import Parallax from '../components/Parallax.jsx'
+import Seo from '../components/Seo.jsx'
 import { getProject, projects } from '../data/projects.js'
+import { api } from '../lib/api.js'
+import { useApi } from '../lib/useApi.js'
+import { normalizeProject } from '../lib/normalize.js'
 
 export default function ProjectDetail() {
   const { slug } = useParams()
-  const project = getProject(slug)
+  const bundled = getProject(slug)
+  // Prefer the API; fall back to bundled data for this slug.
+  const { data: fetched, loading } = useApi(
+    () => api.project(slug).then(normalizeProject),
+    [slug],
+    { fallback: bundled || null }
+  )
+  const project = fetched || bundled
   const heroRef = useRef(null)
 
   useGSAP(
@@ -47,13 +58,15 @@ export default function ProjectDetail() {
     { scope: heroRef, dependencies: [slug] }
   )
 
+  if (loading && !project) return <div className="page-loader" />
   if (!project) return <Navigate to="/projects" replace />
 
   const idx = projects.findIndex((p) => p.slug === slug)
-  const next = projects[(idx + 1) % projects.length]
+  const next = idx >= 0 ? projects[(idx + 1) % projects.length] : projects[0]
 
   return (
     <div className="page page-detail">
+      <Seo title={`${project.title} — Morpheme Studios`} description={project.excerpt} image={project.cover} />
       {/* Hero */}
       <section ref={heroRef} className="pd-hero">
         <div className="pd-hero-img">

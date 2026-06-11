@@ -5,11 +5,21 @@ import { gsap } from '../lib/gsap.js'
 import Reveal from '../components/Reveal.jsx'
 import Parallax from '../components/Parallax.jsx'
 import ResilientImage from '../components/ResilientImage.jsx'
-import { team, approach, stats, offices } from '../data/studio.js'
+import Seo from '../components/Seo.jsx'
+import { team as bundledTeam, approach, stats, offices } from '../data/studio.js'
 import img from '../data/images.js'
+import { api } from '../lib/api.js'
+import { useApi } from '../lib/useApi.js'
+import { normalizeTeamMember } from '../lib/normalize.js'
 
 export default function Studio() {
   const headerRef = useRef(null)
+  const { data: fetchedTeam } = useApi(
+    () => api.team().then((rows) => rows.map(normalizeTeamMember)),
+    [],
+    { fallback: [] }
+  )
+  const team = fetchedTeam && fetchedTeam.length ? fetchedTeam : bundledTeam
 
   useGSAP(() => {
     if (!headerRef.current) return
@@ -37,6 +47,7 @@ export default function Studio() {
 
   return (
     <div className="page page-studio" ref={headerRef}>
+      <Seo title="Studio — Morpheme Studios" description="An architecture & design practice creating clear, inspirational and personal spaces." />
       {/* Page header */}
       <header className="page-head wrap">
         <Reveal><p className="label">The Studio</p></Reveal>

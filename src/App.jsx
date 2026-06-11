@@ -15,6 +15,7 @@ const Studio = lazy(() => import('./pages/Studio.jsx'))
 const Projects = lazy(() => import('./pages/Projects.jsx'))
 const ProjectDetail = lazy(() => import('./pages/ProjectDetail.jsx'))
 const Blog = lazy(() => import('./pages/Blog.jsx'))
+const BlogDetail = lazy(() => import('./pages/BlogDetail.jsx'))
 const Careers = lazy(() => import('./pages/Careers.jsx'))
 const Contact = lazy(() => import('./pages/Contact.jsx'))
 const Terms = lazy(() => import('./pages/Terms.jsx'))
@@ -33,10 +34,11 @@ export default function App() {
   return (
     <>
       {intro && <Loader onDone={() => setIntro(false)} />}
+      <a href="#main" className="skip-link">Skip to content</a>
       <Cursor />
       <ScrollToTop />
       <Navbar />
-      <main>
+      <main id="main" tabIndex={-1}>
         <Suspense fallback={<div className="page-loader" />}>
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<Home />} />
@@ -44,6 +46,7 @@ export default function App() {
             <Route path="/projects" element={<Projects />} />
             <Route path="/projects/:slug" element={<ProjectDetail />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<BlogDetail />} />
             <Route path="/careers" element={<Careers />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/terms" element={<Terms />} />

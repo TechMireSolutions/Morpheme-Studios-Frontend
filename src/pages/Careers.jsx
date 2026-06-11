@@ -1,11 +1,17 @@
-import { Link } from 'react-router-dom'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useGSAP } from '@gsap/react'
 import { gsap } from '../lib/gsap.js'
 import Reveal from '../components/Reveal.jsx'
-import AnimatedHeading from '../components/AnimatedHeading.jsx'
 import Parallax from '../components/Parallax.jsx'
+import Seo from '../components/Seo.jsx'
 import img from '../data/images.js'
+import { api, ApiError } from '../lib/api.js'
+
+const EMPTY = {
+  first_name: '', last_name: '', gender: '', date_of_birth: '', nationality: '',
+  country_of_residence: '', email: '', phone: '', home_address: '',
+  field_of_expertise: '', applying_for: '', education: '', experience_range: '',
+}
 
 const roles = [
   { title: 'Senior Architect', place: 'London / Dubai', type: 'Full-time' },
@@ -20,6 +26,43 @@ const roles = [
 
 export default function Careers() {
   const headerRef = useRef(null)
+  const [form, setForm] = useState(EMPTY)
+  const [files, setFiles] = useState({ cv: null, portfolio: null, cover_letter: null })
+  const [terms, setTerms] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [sent, setSent] = useState(false)
+  const [error, setError] = useState(null)
+  const [fieldErrors, setFieldErrors] = useState({})
+
+  const update = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }))
+  const updateFile = (k) => (e) => setFiles((f) => ({ ...f, [k]: e.target.files[0] || null }))
+  const errOf = (k) => fieldErrors[k]?.[0]
+
+  const submit = async (e) => {
+    e.preventDefault()
+    setSubmitting(true)
+    setError(null)
+    setFieldErrors({})
+    try {
+      const fd = new FormData()
+      Object.entries(form).forEach(([k, v]) => v !== '' && fd.append(k, v))
+      fd.append('terms_accepted', terms ? 'true' : 'false')
+      if (files.cv) fd.append('cv', files.cv)
+      if (files.portfolio) fd.append('portfolio', files.portfolio)
+      if (files.cover_letter) fd.append('cover_letter', files.cover_letter)
+      await api.createApplication(fd)
+      setSent(true)
+    } catch (err) {
+      if (err instanceof ApiError && err.fields) {
+        setFieldErrors(err.fields)
+        setError('Please review the highlighted fields.')
+      } else {
+        setError(err?.message || 'Submission failed. Please try again.')
+      }
+    } finally {
+      setSubmitting(false)
+    }
+  }
 
   useGSAP(() => {
     if (!headerRef.current) return
@@ -47,6 +90,7 @@ export default function Careers() {
 
   return (
     <div className="page" ref={headerRef}>
+      <Seo title="Careers — Morpheme Studios" description="Join an international, creative architecture & design studio in London, Dubai and Karachi." />
       <header className="page-head wrap">
         <Reveal><p className="label">Careers</p></Reveal>
         <Reveal variant="fade" delay={0.15}>
@@ -123,22 +167,37 @@ export default function Careers() {
             </Reveal>
 
             <Reveal variant="fade" className="contact-main">
-              <form className="contact-form" onSubmit={(e) => e.preventDefault()}>
+              {sent ? (
+                <div className="contact-sent" role="status" aria-live="polite">
+                  <h2 className="h-lg">Application received.</h2>
+                  <p className="lead body-muted">
+                    Thank you — your application is with the studio. We review every
+                    submission and will be in touch if there’s a fit.
+                  </p>
+                  <button className="btn" data-cursor onClick={() => { setSent(false); setForm(EMPTY); setFiles({ cv: null, portfolio: null, cover_letter: null }); setTerms(false) }}>
+                    Submit another
+                  </button>
+                </div>
+              ) : (
+              <form className="contact-form" onSubmit={submit} noValidate>
+                {error && <p className="form-error" role="alert">{error}</p>}
                 <div className="field-row">
                   <div className="field">
-                    <label>First Name*</label>
-                    <input type="text" placeholder="John" required />
+                    <label htmlFor="ca-first">First Name*</label>
+                    <input id="ca-first" type="text" placeholder="John" required value={form.first_name} onChange={update('first_name')} aria-invalid={!!errOf('first_name')} />
+                    {errOf('first_name') && <span className="field-error">{errOf('first_name')}</span>}
                   </div>
                   <div className="field">
-                    <label>Last Name*</label>
-                    <input type="text" placeholder="Doe" required />
+                    <label htmlFor="ca-last">Last Name*</label>
+                    <input id="ca-last" type="text" placeholder="Doe" required value={form.last_name} onChange={update('last_name')} aria-invalid={!!errOf('last_name')} />
+                    {errOf('last_name') && <span className="field-error">{errOf('last_name')}</span>}
                   </div>
                 </div>
 
                 <div className="field-row">
                   <div className="field">
-                    <label>Gender*</label>
-                    <select required className="custom-select">
+                    <label htmlFor="ca-gender">Gender</label>
+                    <select id="ca-gender" className="custom-select" value={form.gender} onChange={update('gender')}>
                       <option value="">Select Gender</option>
                       <option value="male">Male</option>
                       <option value="female">Female</option>
@@ -146,75 +205,76 @@ export default function Careers() {
                     </select>
                   </div>
                   <div className="field">
-                    <label>Date of Birth*</label>
-                    <input type="date" required />
+                    <label htmlFor="ca-dob">Date of Birth</label>
+                    <input id="ca-dob" type="date" value={form.date_of_birth} onChange={update('date_of_birth')} />
                   </div>
                 </div>
 
                 <div className="field-row">
                   <div className="field">
-                    <label>Nationality*</label>
-                    <input type="text" placeholder="Your Nationality" required />
+                    <label htmlFor="ca-nat">Nationality</label>
+                    <input id="ca-nat" type="text" placeholder="Your Nationality" value={form.nationality} onChange={update('nationality')} />
                   </div>
                   <div className="field">
-                    <label>Country of Residence*</label>
-                    <input type="text" placeholder="Current Country" required />
+                    <label htmlFor="ca-res">Country of Residence</label>
+                    <input id="ca-res" type="text" placeholder="Current Country" value={form.country_of_residence} onChange={update('country_of_residence')} />
                   </div>
                 </div>
 
                 <div className="field-row">
                   <div className="field">
-                    <label>Email*</label>
-                    <input type="email" placeholder="john@example.com" required />
+                    <label htmlFor="ca-email">Email*</label>
+                    <input id="ca-email" type="email" placeholder="john@example.com" required value={form.email} onChange={update('email')} aria-invalid={!!errOf('email')} />
+                    {errOf('email') && <span className="field-error">{errOf('email')}</span>}
                   </div>
                   <div className="field">
-                    <label>Phone*</label>
-                    <input type="tel" placeholder="+1 234 567 890" required />
+                    <label htmlFor="ca-phone">Phone</label>
+                    <input id="ca-phone" type="tel" placeholder="+1 234 567 890" value={form.phone} onChange={update('phone')} />
                   </div>
                 </div>
 
                 <div className="field">
-                  <label>Home Address*</label>
-                  <textarea placeholder="Your permanent address" rows="2" required></textarea>
+                  <label htmlFor="ca-addr">Home Address</label>
+                  <textarea id="ca-addr" placeholder="Your permanent address" rows="2" value={form.home_address} onChange={update('home_address')} />
                 </div>
 
                 <div className="field-row">
                   <div className="field">
-                    <label>Field of Expertise</label>
-                    <input type="text" placeholder="e.g. Sustainable Design" />
+                    <label htmlFor="ca-field">Field of Expertise</label>
+                    <input id="ca-field" type="text" placeholder="e.g. Sustainable Design" value={form.field_of_expertise} onChange={update('field_of_expertise')} />
                   </div>
                   <div className="field">
-                    <label>Applying for*</label>
-                    <select required className="custom-select">
+                    <label htmlFor="ca-applying">Applying for*</label>
+                    <select id="ca-applying" required className="custom-select" value={form.applying_for} onChange={update('applying_for')}>
                       <option value="">Select Position</option>
-                      <option value="architect-ii">Architect Part II</option>
-                      <option value="architect-assistant-i">Architectural assistant Part I</option>
-                      <option value="architect-assistant">Architectural assistant</option>
-                      <option value="internship">Internship</option>
-                      <option value="landscape">Landscape Architect</option>
-                      <option value="visualizer">Visualizer</option>
-                      <option value="technician">Architectural Technician</option>
-                      <option value="interior">Interior Designer</option>
-                      <option value="ffe">FF&E Manager</option>
+                      <option value="Architect Part II">Architect Part II</option>
+                      <option value="Architectural assistant Part I">Architectural assistant Part I</option>
+                      <option value="Architectural assistant">Architectural assistant</option>
+                      <option value="Internship">Internship</option>
+                      <option value="Landscape Architect">Landscape Architect</option>
+                      <option value="Visualizer">Visualizer</option>
+                      <option value="Architectural Technician">Architectural Technician</option>
+                      <option value="Interior Designer">Interior Designer</option>
+                      <option value="FF&E Manager">FF&E Manager</option>
                     </select>
                   </div>
                 </div>
 
                 <div className="field-row">
                   <div className="field">
-                    <label>Education*</label>
-                    <select required className="custom-select">
+                    <label htmlFor="ca-edu">Education</label>
+                    <select id="ca-edu" className="custom-select" value={form.education} onChange={update('education')}>
                       <option value="">Select Education Level</option>
-                      <option value="post-grad">Post Graduate</option>
-                      <option value="post-doc">Post Doctor</option>
-                      <option value="diploma">Diploma</option>
-                      <option value="technical">Technical Education</option>
-                      <option value="others">Others</option>
+                      <option value="Post Graduate">Post Graduate</option>
+                      <option value="Post Doctor">Post Doctor</option>
+                      <option value="Diploma">Diploma</option>
+                      <option value="Technical Education">Technical Education</option>
+                      <option value="Others">Others</option>
                     </select>
                   </div>
                   <div className="field">
-                    <label>Years of Experience*</label>
-                    <select required className="custom-select">
+                    <label htmlFor="ca-exp">Years of Experience</label>
+                    <select id="ca-exp" className="custom-select" value={form.experience_range} onChange={update('experience_range')}>
                       <option value="">Select Range</option>
                       <option value="1-3">1 - 3 years</option>
                       <option value="4-7">4 - 7 years</option>
@@ -226,31 +286,34 @@ export default function Careers() {
 
                 <div className="field-row">
                   <div className="field">
-                    <label>CV (PDF)*</label>
-                    <input type="file" accept=".pdf" required />
+                    <label htmlFor="ca-cv">CV (PDF)*</label>
+                    <input id="ca-cv" type="file" accept="application/pdf" required onChange={updateFile('cv')} aria-invalid={!!errOf('cv')} />
+                    {errOf('cv') && <span className="field-error">{errOf('cv')}</span>}
                   </div>
                   <div className="field">
-                    <label>Portfolio (Max 10MB)*</label>
-                    <input type="file" accept=".pdf" required />
+                    <label htmlFor="ca-portfolio">Portfolio (PDF, max 10MB)</label>
+                    <input id="ca-portfolio" type="file" accept="application/pdf" onChange={updateFile('portfolio')} />
                   </div>
                 </div>
 
                 <div className="field">
-                  <label>Cover Letter</label>
-                  <input type="file" accept=".pdf" />
+                  <label htmlFor="ca-cover">Cover Letter (PDF)</label>
+                  <input id="ca-cover" type="file" accept="application/pdf" onChange={updateFile('cover_letter')} />
                 </div>
 
                 <div className="field-checkbox">
-                  <input type="checkbox" id="terms" required className="checkbox" />
+                  <input type="checkbox" id="terms" required className="checkbox" checked={terms} onChange={(e) => setTerms(e.target.checked)} aria-invalid={!!errOf('terms_accepted')} />
                   <label htmlFor="terms" className="label-ink" style={{ letterSpacing: '0.05em', textTransform: 'none' }}>
                     I agree to the Terms of Use*
                   </label>
                 </div>
+                {errOf('terms_accepted') && <span className="field-error">{errOf('terms_accepted')}</span>}
 
-                <button type="submit" className="btn btn-fill mt-m" data-cursor>
-                  Submit Application <span className="arrow">→</span>
+                <button type="submit" className="btn btn-fill mt-m" data-cursor disabled={submitting}>
+                  {submitting ? 'Submitting…' : <>Submit Application <span className="arrow">→</span></>}
                 </button>
               </form>
+              )}
             </Reveal>
           </div>
         </div>
