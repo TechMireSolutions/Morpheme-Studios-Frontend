@@ -44,6 +44,17 @@ export function normalizePost(p) {
   }
 }
 
+export function normalizeOffice(o) {
+  if (!o) return null
+  return {
+    city: o.city,
+    country: o.country || '',
+    lines: o.address_lines || [],   // backend field is address_lines; FE uses `lines`
+    phone: o.phone || '',
+    email: o.email || '',
+  }
+}
+
 export function normalizeTeamMember(m) {
   if (!m) return null
   return {

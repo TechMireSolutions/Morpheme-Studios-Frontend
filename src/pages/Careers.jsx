@@ -4,8 +4,10 @@ import { gsap } from '../lib/gsap.js'
 import Reveal from '../components/Reveal.jsx'
 import Parallax from '../components/Parallax.jsx'
 import Seo from '../components/Seo.jsx'
-import img from '../data/images.js'
 import { api, ApiError } from '../lib/api.js'
+import { useApi } from '../lib/useApi.js'
+
+const CAREERS_IMG = '/assets/architecture.jpg'   // static brand asset (not DB content)
 
 const EMPTY = {
   first_name: '', last_name: '', gender: '', date_of_birth: '', nationality: '',
@@ -13,19 +15,9 @@ const EMPTY = {
   field_of_expertise: '', applying_for: '', education: '', experience_range: '',
 }
 
-const roles = [
-  { title: 'Senior Architect', place: 'London / Dubai', type: 'Full-time' },
-  { title: 'Architectural Assistants Part I & II', place: 'London / Dubai', type: 'Full-time' },
-  { title: 'Interior Designer', place: 'London / Dubai', type: 'Full-time' },
-  { title: 'FF&E Designer', place: 'Dubai', type: 'Full-time' },
-  { title: 'Landscape Architect', place: 'London / Karachi', type: 'Full-time' },
-  { title: '3D Visualizer', place: 'Remote', type: 'Contract' },
-  { title: 'Business Development Manager', place: 'London / Dubai', type: 'Full-time' },
-  { title: 'Office Manager', place: 'London / Karachi', type: 'Full-time' },
-]
-
 export default function Careers() {
   const headerRef = useRef(null)
+  const { data: roles } = useApi(() => api.openings(), [], { fallback: [] })
   const [form, setForm] = useState(EMPTY)
   const [files, setFiles] = useState({ cv: null, portfolio: null, cover_letter: null })
   const [terms, setTerms] = useState(false)

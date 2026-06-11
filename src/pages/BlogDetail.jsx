@@ -1,20 +1,17 @@
 import { useParams, Link, Navigate } from 'react-router-dom'
 import Reveal from '../components/Reveal.jsx'
 import Seo from '../components/Seo.jsx'
-import { getPost } from '../data/blog.js'
 import { api } from '../lib/api.js'
 import { useApi } from '../lib/useApi.js'
 import { normalizePost } from '../lib/normalize.js'
 
 export default function BlogDetail() {
   const { slug } = useParams()
-  const bundled = getPost(slug)
-  const { data: fetched, loading } = useApi(
+  const { data: post, loading } = useApi(
     () => api.post(slug).then(normalizePost),
     [slug],
-    { fallback: bundled || null }
+    { fallback: null }
   )
-  const post = fetched || bundled
 
   if (loading && !post) return <div className="page-loader" />
   if (!post) return <Navigate to="/blog" replace />

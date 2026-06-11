@@ -6,21 +6,22 @@ import { gsap } from '../lib/gsap.js'
 import Reveal from '../components/Reveal.jsx'
 import Parallax from '../components/Parallax.jsx'
 import Seo from '../components/Seo.jsx'
-import { getProject, projects } from '../data/projects.js'
 import { api } from '../lib/api.js'
 import { useApi } from '../lib/useApi.js'
 import { normalizeProject } from '../lib/normalize.js'
 
 export default function ProjectDetail() {
   const { slug } = useParams()
-  const bundled = getProject(slug)
-  // Prefer the API; fall back to bundled data for this slug.
-  const { data: fetched, loading } = useApi(
+  // Strictly API-driven (DB is the source of truth).
+  const { data: project, loading } = useApi(
     () => api.project(slug).then(normalizeProject),
     [slug],
-    { fallback: bundled || null }
+    { fallback: null }
   )
-  const project = fetched || bundled
+  const { data: all } = useApi(
+    () => api.projects({ page_size: 100 }).then((r) => (r.results || []).map(normalizeProject)),
+    [], { fallback: [] })
+  const projects = all || []
   const heroRef = useRef(null)
 
   useGSAP(
@@ -137,15 +138,17 @@ export default function ProjectDetail() {
       </section>
 
       {/* Next project */}
-      <section className="section dark pd-next">
-        <Link to={`/projects/${next.slug}`} className="wrap pd-next-link" data-cursor="Next">
-          <span className="label">Next project</span>
-          <h2 className="display pd-next-title">{next.title}</h2>
-          <div className="media zoom ratio-16-9 pd-next-media">
-            <img src={next.cover} alt={next.title} loading="lazy" />
-          </div>
-        </Link>
-      </section>
+      {next && (
+        <section className="section dark pd-next">
+          <Link to={`/projects/${next.slug}`} className="wrap pd-next-link" data-cursor="Next">
+            <span className="label">Next project</span>
+            <h2 className="display pd-next-title">{next.title}</h2>
+            <div className="media zoom ratio-16-9 pd-next-media">
+              <img src={next.cover} alt={next.title} loading="lazy" />
+            </div>
+          </Link>
+        </section>
+      )}
     </div>
   )
 }

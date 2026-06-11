@@ -4,19 +4,17 @@ import { useGSAP } from '@gsap/react'
 import { gsap } from '../lib/gsap.js'
 import Reveal from '../components/Reveal.jsx'
 import Seo from '../components/Seo.jsx'
-import { blog as bundledBlog } from '../data/blog.js'
 import { api } from '../lib/api.js'
 import { useApi } from '../lib/useApi.js'
 import { normalizePost } from '../lib/normalize.js'
 
 export default function Blog() {
-  const { data } = useApi(
+  const { data: blog } = useApi(
     () => api.blog({ page_size: 100 }).then((r) => (r.results || []).map(normalizePost)),
     [],
     { fallback: [] }
   )
-  const blog = data && data.length ? data : bundledBlog
-  const [lead, ...rest] = blog
+  const [lead, ...rest] = blog || []
   const headerRef = useRef(null)
 
   useGSAP(() => {
@@ -55,6 +53,7 @@ export default function Blog() {
       </header>
 
       {/* Lead article */}
+      {lead && (
       <section className="wrap section-tight jlead-wrap">
         <Reveal variant="clip">
           <Link to={`/blog/${lead.slug}`} className="jlead" data-cursor="Read">
@@ -75,6 +74,7 @@ export default function Blog() {
           </Link>
         </Reveal>
       </section>
+      )}
 
       {/* Grid */}
       <section className="section">

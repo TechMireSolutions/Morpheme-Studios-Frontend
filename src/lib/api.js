@@ -1,7 +1,11 @@
 // Central API client for the Morpheme Studios backend (Django + DRF).
 // Base URL is build-time configurable via VITE_API_URL; defaults to local dev.
 
-const BASE = (import.meta.env?.VITE_API_URL || 'http://localhost:8000') + '/api/v1'
+export const API_ORIGIN = import.meta.env?.VITE_API_URL || 'http://localhost:8000'
+const BASE = API_ORIGIN + '/api/v1'
+
+// Absolutize a possibly-relative /media/ path (settings images bypass the serializer).
+export const absMedia = (u) => (u && u.startsWith('/') ? API_ORIGIN + u : u)
 
 export class ApiError extends Error {
   constructor(message, { status, fields } = {}) {
@@ -56,6 +60,7 @@ export const api = {
   post: (slug) => get(`/blog/${slug}`),
   team: () => get('/team'),
   testimonials: () => get('/testimonials'),
+  openings: () => get('/careers/openings'),
   offices: () => get('/offices'),
   settings: () => get('/settings'),
   seoMeta: (path) => get('/seo/meta', { path }),

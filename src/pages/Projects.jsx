@@ -4,7 +4,6 @@ import { gsap } from '../lib/gsap.js'
 import Reveal from '../components/Reveal.jsx'
 import ProjectCard from '../components/ProjectCard.jsx'
 import Seo from '../components/Seo.jsx'
-import { projects as bundledProjects, categories } from '../data/projects.js'
 import { api } from '../lib/api.js'
 import { useApi } from '../lib/useApi.js'
 import { normalizeProject } from '../lib/normalize.js'
@@ -13,13 +12,14 @@ export default function Projects() {
   const [active, setActive] = useState('all')
   const headerRef = useRef(null)
 
-  // Fetch from the API; fall back to bundled data until content is migrated.
-  const { data } = useApi(
+  // Projects + categories are fetched strictly from the API (DB-driven).
+  const { data: projects } = useApi(
     () => api.projects({ page_size: 100 }).then((r) => (r.results || []).map(normalizeProject)),
     [],
     { fallback: [] }
   )
-  const projects = data && data.length ? data : bundledProjects
+  const { data: apiCats } = useApi(() => api.projectCategories(), [], { fallback: [] })
+  const categories = [{ key: 'all', label: 'All Projects' }, ...(apiCats || [])]
 
   const list = useMemo(
     () => (active === 'all' ? projects : projects.filter((p) => p.category === active)),

@@ -6,20 +6,20 @@ import Reveal from '../components/Reveal.jsx'
 import Parallax from '../components/Parallax.jsx'
 import ResilientImage from '../components/ResilientImage.jsx'
 import Seo from '../components/Seo.jsx'
-import { team as bundledTeam, approach, stats, offices } from '../data/studio.js'
-import img from '../data/images.js'
 import { api } from '../lib/api.js'
 import { useApi } from '../lib/useApi.js'
-import { normalizeTeamMember } from '../lib/normalize.js'
+import { normalizeTeamMember, normalizeOffice } from '../lib/normalize.js'
+
+const STUDIO_IMG = '/assets/architecture.jpg'   // static brand asset (not DB content)
 
 export default function Studio() {
   const headerRef = useRef(null)
-  const { data: fetchedTeam } = useApi(
+  const { data: team } = useApi(
     () => api.team().then((rows) => rows.map(normalizeTeamMember)),
-    [],
-    { fallback: [] }
-  )
-  const team = fetchedTeam && fetchedTeam.length ? fetchedTeam : bundledTeam
+    [], { fallback: [] })
+  const { data: offices } = useApi(
+    () => api.offices().then((rows) => rows.map(normalizeOffice)),
+    [], { fallback: [] })
 
   useGSAP(() => {
     if (!headerRef.current) return
@@ -61,7 +61,7 @@ export default function Studio() {
       {/* Big lead image */}
       <section className="wrap section-tight lead-image-wrap">
         <Reveal variant="clip">
-          <Parallax src={img.studio} alt="Inside the studio" ratio="ratio-16-9" />
+          <Parallax src={STUDIO_IMG} alt="Inside the studio" ratio="ratio-16-9" />
         </Reveal>
       </section>
 

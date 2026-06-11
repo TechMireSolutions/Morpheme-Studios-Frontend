@@ -9,15 +9,24 @@ import Marquee from '../components/Marquee.jsx'
 import ProjectCard from '../components/ProjectCard.jsx'
 import Parallax from '../components/Parallax.jsx'
 
-import { getFeatured } from '../data/projects.js'
-import { services, stats } from '../data/studio.js'
-import { blog } from '../data/blog.js'
-import img from '../data/images.js'
+import { api, absMedia } from '../lib/api.js'
+import { useApi } from '../lib/useApi.js'
+import { normalizeProject, normalizePost } from '../lib/normalize.js'
+
+const HERO_IMG = '/assets/hero-pynnacles.jpg'   // static brand asset (not DB content)
 
 export default function Home() {
   const heroRef = useRef(null)
-  const featured = getFeatured()
-  const blogTop = blog.slice(0, 3)
+  const { data: featured } = useApi(
+    () => api.projects({ is_featured: true, ordering: 'featured_order' }).then((r) => (r.results || []).map(normalizeProject)),
+    [], { fallback: [] })
+  const { data: blogList } = useApi(
+    () => api.blog({ page_size: 3 }).then((r) => (r.results || []).map(normalizePost)),
+    [], { fallback: [] })
+  const { data: settings } = useApi(() => api.settings(), [], { fallback: {} })
+  const blogTop = (blogList || []).slice(0, 3)
+  const services = (settings?.services || []).map((s) => ({ ...s, image: absMedia(s.image) }))
+  const stats = settings?.stats || []
 
   // Hero intro + background parallax
   useGSAP(
@@ -75,7 +84,7 @@ export default function Home() {
         <div className="hero-bg">
           <picture>
             <img
-              src={img.hero}
+              src={HERO_IMG}
               alt="Pynnacles Close Residences — High-end residential architecture in London"
               fetchpriority="high"
               loading="eager"
@@ -149,7 +158,7 @@ export default function Home() {
       </section>
 
       {/* ---------------- SERVICES ---------------- */}
-      <ServicesList />
+      <ServicesList services={services} />
 
       {/* ---------------- STATS (dark) ---------------- */}
       <section className="section dark stats">
@@ -179,7 +188,7 @@ export default function Home() {
           <div className="grid cols-3 keep-2 blog-grid mt-xl">
             {blogTop.map((post) => (
               <Reveal variant="fade" key={post.slug}>
-                <Link to="/blog" className="jcard" data-cursor="Read">
+                <Link to={`/blog/${post.slug}`} className="jcard" data-cursor="Read">
                   <div className="media zoom ratio-4-3">
                     <img src={post.image} alt={post.title} loading="lazy" />
                   </div>
@@ -202,7 +211,7 @@ export default function Home() {
 }
 
 /* ---- Services list with hover-follow image ---- */
-function ServicesList() {
+function ServicesList({ services = [] }) {
   const ref = useRef(null)
   const previewRef = useRef(null)
 
@@ -256,7 +265,7 @@ function ServicesList() {
       </div>
 
       <div ref={previewRef} className="services-preview" aria-hidden="true">
-        <img src={services[0].image} alt="" />
+        <img src={services[0]?.image || ''} alt="" />
       </div>
     </section>
   )
