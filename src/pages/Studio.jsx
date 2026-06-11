@@ -116,7 +116,7 @@ export default function Studio() {
             ))}
           </div>
           <Reveal variant="fade" className="offices-cta">
-            <Link to="/contact" className="btn" data-cursor>Work with us <span className="arrow">→</span></Link>
+            <Link to="/careers" className="btn" data-cursor>Work with us <span className="arrow">→</span></Link>
           </Reveal>
         </div>
       </section>

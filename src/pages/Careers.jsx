@@ -30,6 +30,15 @@ export default function Careers() {
   const updateFile = (k) => (e) => setFiles((f) => ({ ...f, [k]: e.target.files[0] || null }))
   const errOf = (k) => fieldErrors[k]?.[0]
 
+  // Clicking a role card pre-selects that role and scrolls to the form
+  const selectRole = (title) => {
+    setForm((f) => ({ ...f, applying_for: title }))
+    const applySection = document.getElementById('apply-section')
+    if (applySection) {
+      applySection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }
+
   const submit = async (e) => {
     e.preventDefault()
     setSubmitting(true)
@@ -123,7 +132,15 @@ export default function Careers() {
           </Reveal>
           <ul className="roles">
             {(roles || []).map((r) => (
-              <Reveal variant="up" as="li" key={r.slug || r.title} className="role-row" data-cursor="Apply">
+              <Reveal
+                variant="up"
+                as="li"
+                key={r.slug || r.title}
+                className="role-row"
+                data-cursor="Apply"
+                onClick={() => selectRole(r.title)}
+                style={{ cursor: 'pointer' }}
+              >
                 <h3 className="role-title h-md">{r.title}</h3>
                 <span className="role-place body-muted">{r.place}</span>
                 <span className="label role-type">{r.employment_type}</span>
@@ -138,7 +155,7 @@ export default function Careers() {
       </section>
 
       {/* Application Form */}
-      <section className="section application">
+      <section id="apply-section" className="section application">
         <div className="wrap">
           <div className="contact-grid">
             <Reveal className="contact-aside">

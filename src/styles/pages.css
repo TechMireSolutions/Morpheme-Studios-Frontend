@@ -1152,3 +1152,45 @@ input[type="file"]::-webkit-file-upload-button {
   gap: 22px;
   align-items: flex-start;
 }
+
+/* =================== NEWSLETTER RESEND =================== */
+/* Inline resend-email button inside the dark footer  */
+.nl-resend-btn {
+  background: none;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  padding: 0;
+  color: inherit;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  font-size: inherit;
+}
+
+.nl-resend-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* =================== PAGE BOTTOM SPACING =================== */
+/* Ensures there is always a visible gutter between the last page
+   section and the global Footer (prevents margin-collapse). */
+.page {
+  padding-bottom: var(--section-y);
+}
+
+/* ProjectDetail ends with a dark "Next project" strip — no extra gap needed there */
+.page.page-detail {
+  padding-bottom: 0;
+}
+
+/* Contact page has its own section-tight wrapper — a lighter pad is enough */
+.page-contact {
+  padding-bottom: clamp(60px, 8vw, 120px);
+}
+
+/* Apply-section anchor offset so the sticky navbar doesn't hide the heading */
+#apply-section {
+  scroll-margin-top: 88px;
+}
