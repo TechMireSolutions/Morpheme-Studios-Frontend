@@ -4,23 +4,21 @@ import { api, ApiError } from '../lib/api.js'
 export default function Newsletter() {
   const [email, setEmail] = useState('')
   const [confirmedEmail, setConfirmedEmail] = useState('')
-  // Phases: idle | sending | confirming | fading | resend | resubmitting | error
-  const [phase, setPhase] = useState('idle') 
+  const [phase, setPhase] = useState('idle') // idle | sending | confirming | fading | resend | resubmitting
   const [message, setMessage] = useState('')
+  const [msgVisible, setMsgVisible] = useState(true)
   const fadeTimer = useRef(null)
 
-  // Auto-fade the confirmation message after 2.5s, then show resend interface
+  // Auto-fade the confirmation message after 2.5 s, then show resend
   useEffect(() => {
     if (phase === 'confirming') {
+      setMsgVisible(true)
       fadeTimer.current = setTimeout(() => {
         setPhase('fading')
-        
-        fadeTimer.current = setTimeout(() => {
-          setPhase('resend')
-        }, 500) // matches the 0.5s CSS opacity transition
+        // allow CSS transition to complete before switching to resend
+        setTimeout(() => setPhase('resend'), 500)
       }, 2500)
     }
-    
     return () => clearTimeout(fadeTimer.current)
   }, [phase])
 
@@ -39,26 +37,22 @@ export default function Newsletter() {
 
   const submit = async (e) => {
     e.preventDefault()
-    if (!email) return
     setPhase('sending')
     setMessage('')
     await doSubscribe(email)
-    setEmail('') // Safely clear input since email is cached in parameters/state
+    setEmail('')
   }
 
   const resend = async () => {
     setPhase('resubmitting')
-    setMessage('')
-    // Passes the cached confirmed email address back to backend
-    await doSubscribe(confirmedEmail) 
+    await doSubscribe(confirmedEmail)
   }
 
-  return (
-    <div className="footer-col footer-newsletter">
-      <p className="label">Newsletter</p>
-
-      {/* Case 1: Displaying the success message & its fade state */}
-      {(phase === 'confirming' || phase === 'fading') && (
+  /* ---- render ---- */
+  if (phase === 'confirming' || phase === 'fading') {
+    return (
+      <div className="footer-col footer-newsletter">
+        <p className="label">Newsletter</p>
         <p
           className="body-muted nl-confirm-msg"
           role="status"
@@ -67,10 +61,14 @@ export default function Newsletter() {
         >
           {message}
         </p>
-      )}
+      </div>
+    )
+  }
 
-      {/* Case 2: Displaying the resend configuration */}
-      {(phase === 'resend' || phase === 'resubmitting') && (
+  if (phase === 'resend' || phase === 'resubmitting') {
+    return (
+      <div className="footer-col footer-newsletter">
+        <p className="label">Newsletter</p>
         <p className="body-muted nl-resend-wrap">
           Didn't get it?{' '}
           <button
@@ -82,32 +80,29 @@ export default function Newsletter() {
             {phase === 'resubmitting' ? 'Sending…' : 'Resend Email'}
           </button>
         </p>
-      )}
+      </div>
+    )
+  }
 
-      {/* Case 3: Displaying the default or error state input form */}
-      {(phase === 'idle' || phase === 'sending' || phase === 'error') && (
-        <form className="newsletter-form" onSubmit={submit} noValidate>
-          <label htmlFor="nl-email" className="sr-only">Email address</label>
-          <input
-            id="nl-email"
-            type="email"
-            required
-            placeholder="you@email.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            aria-invalid={phase === 'error'}
-          />
-          <button type="submit" className="btn btn-sm" data-cursor disabled={phase === 'sending'}>
-            {phase === 'sending' ? 'Subscribing…' : 'Subscribe'}
-          </button>
-          
-          {phase === 'error' && (
-            <span className="field-error" role="alert" style={{ display: 'block', marginTop: '5px' }}>
-              {message}
-            </span>
-          )}
-        </form>
-      )}
+  return (
+    <div className="footer-col footer-newsletter">
+      <p className="label">Newsletter</p>
+      <form className="newsletter-form" onSubmit={submit} noValidate>
+        <label htmlFor="nl-email" className="sr-only">Email address</label>
+        <input
+          id="nl-email"
+          type="email"
+          required
+          placeholder="you@email.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          aria-invalid={phase === 'error'}
+        />
+        <button type="submit" className="btn btn-sm" data-cursor disabled={phase === 'sending'}>
+          {phase === 'sending' ? 'Subscribing…' : 'Subscribe'}
+        </button>
+        {phase === 'error' && <span className="field-error" role="alert">{message}</span>}
+      </form>
     </div>
   )
 }
