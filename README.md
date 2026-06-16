@@ -4,16 +4,32 @@ A redesigned front end for **morphemestudios.com**, rebuilt as a modern, editori
 photography-led architecture studio site — inspired by Ayers Saint Gross, Woodcliffe,
 Minale + Mann and Turner Works.
 
-**Stack:** React 18 · React Router 6 · GSAP 3 (+ ScrollTrigger) · Vite. Frontend only.
+**Stack:** React 18 · React Router 6 · GSAP 3 (+ ScrollTrigger) · Vite. Content is served by the Django + DRF backend (Morpheme-Studios-Backend).
 
-## Run
+## Run — local development
+
+> Prerequisite: **Node 20+**. The **backend must be running first** at http://localhost:8000 — follow the backend repo's README ("Local Development") to start it, then come back here.
 
 ```bash
+# 1. Install dependencies
 npm install
+
+# 2. Create a .env file pointing the app at your local backend
+#    (create the file in the project root with this single line):
+#        VITE_API_URL=http://localhost:8000
+
+# 3. Start the dev server
 npm run dev      # http://localhost:5173
-npm run build    # production build → dist/
-npm run preview  # preview the production build
 ```
+
+Open **http://localhost:5173** — the site loads its projects, team, journal and jobs from the backend API. If images or content are missing, confirm the backend is running on port 8000 and that `VITE_API_URL` matches.
+
+```bash
+npm run build    # production build → dist/
+npm run preview  # preview the production build locally
+```
+
+For production, set `VITE_API_URL` to the live API origin at build time, e.g. `VITE_API_URL=https://morphemestudios.com npm run build`.
 
 ## What's inside
 
@@ -48,7 +64,8 @@ npm run preview  # preview the production build
 
 ## Notes
 
-- The contact form is frontend-only (no backend wired up); submit shows a success state.
-- Imagery uses Unsplash URLs as placeholders — swap the IDs in `src/data/images.js`
-  for real project photography.
+- The app is fully API-driven: projects, team, journal, jobs and site settings come
+  from the backend (`VITE_API_URL`). The contact, careers and newsletter forms POST to
+  the backend API.
+- Imagery is served from the backend's self-hosted media; manage it via the Django admin.
 - Social/legal links in the footer are placeholders (`#`).
