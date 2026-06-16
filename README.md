@@ -34,6 +34,7 @@ For production, set `VITE_API_URL` to the live API origin at build time, e.g. `V
 ## What's inside
 
 **Pages** (`src/pages/`)
+
 - `Home` — full-screen hero with parallax, marquee, intro statement, featured projects,
   hover-preview services list, animated stat counters, journal teaser
 - `Studio` — philosophy, 4-step approach, leadership grid, three offices
