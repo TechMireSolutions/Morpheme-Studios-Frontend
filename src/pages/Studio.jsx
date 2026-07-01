@@ -24,7 +24,7 @@ export default function Studio() {
   useGSAP(() => {
     if (!headerRef.current) return
     const tl = gsap.timeline()
-    tl.from('.page-title .ah-word > span', {
+    tl.from('.page-title', {
       yPercent: 110,
       duration: 1.2,
       ease: 'power4.out',
@@ -51,6 +51,7 @@ export default function Studio() {
       {/* Page header */}
       <header className="page-head wrap">
         <Reveal><p className="label">The Studio</p></Reveal>
+        <Reveal variant="fade"><h1 className="display page-title">Studio</h1></Reveal>
         <Reveal variant="fade" delay={0.2}>
           <p className="lead maxw-720 page-head-sub">
             M/S MORPHEME STUDIOS is an architecture design service firm or incorporation of art. The firm reflects an enduring dedication to contemporary design principles and its applications.

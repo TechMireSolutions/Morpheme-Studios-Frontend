@@ -19,7 +19,7 @@ export default function Blog() {
 
   useGSAP(() => {
     const tl = gsap.timeline()
-    tl.from('.page-title .ah-word > span', {
+    tl.from('.page-title', {
       yPercent: 110,
       duration: 1.2,
       ease: 'power4.out',
@@ -32,19 +32,23 @@ export default function Blog() {
         stagger: 0.15,
         ease: 'power3.out'
       }, '-=0.8')
-      .from('.jlead-wrap', {
+      
+    if (lead) {
+      tl.from('.jlead-wrap', {
         y: 40,
         autoAlpha: 0,
         duration: 1.2,
         ease: 'power3.out'
       }, '-=0.6')
-  }, { scope: headerRef })
+    }
+  }, { scope: headerRef, dependencies: [lead] })
 
   return (
     <div className="page" ref={headerRef}>
       <Seo title="Blog — Morpheme Studios" description="Essays, studio news and the materials and ideas we keep returning to." />
       <header className="page-head wrap">
         <Reveal><p className="label">Blog</p></Reveal>
+        <Reveal variant="fade"><h1 className="display page-title">Blog</h1></Reveal>
         <Reveal variant="fade" delay={0.15}>
           <p className="lead maxw-720 page-head-sub">
             Essays, studio news and the materials and ideas we keep returning to.

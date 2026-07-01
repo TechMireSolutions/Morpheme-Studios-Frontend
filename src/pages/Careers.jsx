@@ -94,6 +94,7 @@ export default function Careers() {
       <Seo title="Careers — Morpheme Studios" description="Join an international, creative architecture & design studio in London, Dubai and Karachi." />
       <header className="page-head wrap">
         <Reveal><p className="label">Careers</p></Reveal>
+        <Reveal variant="fade"><h1 className="display page-title">Careers</h1></Reveal>
         <Reveal variant="fade" delay={0.15}>
           <p className="lead maxw-720 page-head-sub">
             Morpheme Studios is always looking for talented architects, interior architects
