@@ -7,7 +7,6 @@ import Reveal from '../components/Reveal.jsx'
 import Seo from '../components/Seo.jsx'
 import Marquee from '../components/Marquee.jsx'
 import ProjectCard from '../components/ProjectCard.jsx'
-import Parallax from '../components/Parallax.jsx'
 
 import { api, absMedia } from '../lib/api.js'
 import { useApi } from '../lib/useApi.js'
@@ -86,6 +85,7 @@ export default function Home() {
             <img
               src={HERO_IMG}
               alt="Pynnacles Close Residences — High-end residential architecture in London"
+              // eslint-disable-next-line react/no-unknown-property
               fetchpriority="high"
               loading="eager"
               decoding="async"

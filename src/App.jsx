@@ -1,5 +1,5 @@
 import { useEffect, useState, lazy, Suspense } from 'react'
-import { Routes, Route, useLocation } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
@@ -21,7 +21,7 @@ const Contact = lazy(() => import('./pages/Contact.jsx'))
 const Terms = lazy(() => import('./pages/Terms.jsx'))
 const NotFound = lazy(() => import('./pages/NotFound.jsx'))
 
-export default function App() {
+export function Layout() {
   const location = useLocation()
   const [intro, setIntro] = useState(true)
 
@@ -40,21 +40,31 @@ export default function App() {
       <Navbar />
       <main id="main" tabIndex={-1}>
         <Suspense fallback={<div className="page-loader" />}>
-          <Routes location={location} key={location.pathname}>
-            <Route path="/" element={<Home />} />
-            <Route path="/studio" element={<Studio />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/projects/:slug" element={<ProjectDetail />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/:slug" element={<BlogDetail />} />
-            <Route path="/careers" element={<Careers />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/terms" element={<Terms />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <Outlet key={location.pathname} />
         </Suspense>
       </main>
       <Footer hideCTA={['/blog', '/careers', '/contact', '/terms'].includes(location.pathname)} />
     </>
   )
 }
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const routes = [
+  {
+    path: '/',
+    element: <Layout />,
+    children: [
+      { index: true, element: <Home /> },
+      { path: 'studio', element: <Studio /> },
+      { path: 'projects', element: <Projects /> },
+      { path: 'projects/:slug', element: <ProjectDetail /> },
+      { path: 'blog', element: <Blog /> },
+      { path: 'blog/:slug', element: <BlogDetail /> },
+      { path: 'careers', element: <Careers /> },
+      { path: 'contact', element: <Contact /> },
+      { path: 'terms', element: <Terms /> },
+      { path: '*', element: <NotFound /> },
+    ],
+  },
+]
+

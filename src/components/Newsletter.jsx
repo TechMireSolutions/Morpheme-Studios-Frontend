@@ -6,13 +6,11 @@ export default function Newsletter() {
   const [confirmedEmail, setConfirmedEmail] = useState('')
   const [phase, setPhase] = useState('idle') // idle | sending | confirming | fading | resend | resubmitting
   const [message, setMessage] = useState('')
-  const [msgVisible, setMsgVisible] = useState(true)
   const fadeTimer = useRef(null)
 
   // Auto-fade the confirmation message after 2.5 s, then show resend
   useEffect(() => {
     if (phase === 'confirming') {
-      setMsgVisible(true)
       fadeTimer.current = setTimeout(() => {
         setPhase('fading')
         // allow CSS transition to complete before switching to resend

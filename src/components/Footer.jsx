@@ -4,7 +4,7 @@ import { api } from '../lib/api.js'
 import { useApi } from '../lib/useApi.js'
 import { normalizeOffice } from '../lib/normalize.js'
 
-export default function Footer({ hideCTA = false }) {
+export default function Footer() {
   const { data: offices } = useApi(
     () => api.offices().then((rows) => rows.map(normalizeOffice)), [], { fallback: [] })
   return (
