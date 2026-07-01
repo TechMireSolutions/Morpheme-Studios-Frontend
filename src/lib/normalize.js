@@ -1,7 +1,5 @@
 // Map backend (DRF) payloads onto the shape the existing components already
-// consume, so wiring the API needs no component rewrites. Where the backend has
-// no data yet, callers fall back to the bundled data/*.js modules.
-
+// consume, so wiring the API needs no component rewrites.
 const PLACEHOLDER = '/placeholder.svg'
 
 export function normalizeProject(p) {
@@ -38,7 +36,7 @@ export function normalizePost(p) {
     tags: p.tags || [],
     author: p.author || '',
     cover,
-    image: cover, // alias: bundled blog data uses `image`
+    image: cover,
     date: p.published_at ? new Date(p.published_at).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' }) : '',
     readingMinutes: p.reading_minutes ?? null,
   }
@@ -60,7 +58,7 @@ export function normalizeTeamMember(m) {
   return {
     name: m.name,
     role: m.role || '',
-    note: m.bio || '', // bundled team data uses `note`
+    note: m.bio || '',
     image: m.photo?.url || '/assets/team-placeholder.svg',
   }
 }
