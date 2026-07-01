@@ -31,7 +31,9 @@ export default function Reveal({
       }
 
       if (variant === 'stagger') {
-        gsap.from(el.children, {
+        const targets = gsap.utils.toArray(el.children)
+        if (!targets.length) return
+        gsap.from(targets, {
           ...common,
           y,
           autoAlpha: 0,

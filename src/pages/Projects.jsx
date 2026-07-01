@@ -53,6 +53,7 @@ export default function Projects() {
       <Seo title="Projects — Morpheme Studios" description="Cultural, corporate and residential architecture & design work across three continents." />
       <header className="page-head wrap">
         <Reveal><p className="label">Selected Work</p></Reveal>
+        <Reveal variant="fade"><h1 className="display page-title">Projects</h1></Reveal>
         <Reveal variant="fade" delay={0.15}>
           <p className="lead maxw-720 page-head-sub">
             Cultural, corporate and residential work across three continents — each
